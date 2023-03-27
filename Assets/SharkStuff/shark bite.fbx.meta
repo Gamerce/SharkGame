@@ -1,0 +1,199 @@
+fileFormatVersion: 2
+guid: a8f13ca5919474de8bdedd4e1017932d
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 1
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: shark bite(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: world
+      parentName: shark bite(Clone)
+      position: {x: -0, y: -0.119726904, z: 0.113993846}
+      rotation: {x: -0.03047526, y: 0, z: -0, w: 0.9995355}
+      scale: {x: 1, y: 1, z: 1}
+    - name: arm
+      parentName: world
+      position: {x: -0, y: 0.08389059, z: 0.24331124}
+      rotation: {x: 0.45687765, y: -0, z: -0, w: 0.8895295}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wrist
+      parentName: arm
+      position: {x: -0, y: 0.051644094, z: -0.22098869}
+      rotation: {x: 0.065913536, y: -0, z: -0, w: 0.9978254}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: wrist
+      position: {x: -0, y: 0.00660564, z: -0.10629076}
+      rotation: {x: 0.027732698, y: -0, z: -0, w: 0.99961543}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_top
+      parentName: head
+      position: {x: -0, y: 0.05224461, z: -0.094280496}
+      rotation: {x: -0.05095225, y: 0, z: -0, w: 0.9987011}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_bot
+      parentName: head
+      position: {x: -0, y: -0.013811793, z: -0.01981692}
+      rotation: {x: 0.20944983, y: -0, z: -0, w: 0.97781944}
+      scale: {x: 1, y: 1, z: 1}
+    - name: geo_shark
+      parentName: shark bite(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: geo_teeth_top
+      parentName: geo_shark
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: geo_teeth_bot
+      parentName: geo_shark
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: geo_arm
+      parentName: shark bite(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: arm
+      parentName: shark bite(Clone)
+      position: {x: -0, y: -0.020557694, z: 0.35166824}
+      rotation: {x: 0.057800677, y: -0.70474046, z: -0.057800677, w: 0.70474046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wrist
+      parentName: arm
+      position: {x: -0.22656168, y: 3.5527136e-17, z: 0}
+      rotation: {x: 0, y: 0, z: 0.12113196, w: 0.99263644}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: wrist
+      position: {x: -0.10619649, y: 8.3266725e-19, z: 0}
+      rotation: {x: 0, y: 0, z: 0.30702823, w: 0.95170045}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_bot
+      parentName: head
+      position: {x: -0.025181267, y: -2.6645352e-17, z: 0}
+      rotation: {x: 0, y: -0, z: -0.1627026, w: 0.98667514}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_bot2
+      parentName: jaw_bot
+      position: {x: -0.11553758, y: -2.8865798e-17, z: 0}
+      rotation: {x: 0.2465649, y: 0.662726, z: -0.2465649, w: 0.662726}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_top
+      parentName: head
+      position: {x: -0.047190912, y: 0.096037336, z: 0}
+      rotation: {x: 0, y: -0, z: -0.27368206, w: 0.96182024}
+      scale: {x: 1, y: 1, z: 1}
+    - name: jaw_top2
+      parentName: jaw_top
+      position: {x: -0.10143055, y: 1.7763568e-17, z: 0}
+      rotation: {x: 0, y: 0, z: 0.32233348, w: 0.9466262}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
