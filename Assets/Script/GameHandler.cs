@@ -31,15 +31,23 @@ public class GameHandler : MonoBehaviour
     public List<NPC> AllNPC= new List<NPC>();
 
     public List<NpcSpawner> AllNpcSpawners = new List<NpcSpawner>();
-
+    public LevelManager _LevelManager;
+    public SharkPlayer _SharkPlayer;
+    public RewardBase _rewardBase;
+    public bool GameHasEnded = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        Init();
 
 
     }
+    public void Init()
+    {
+        _SharkPlayer.Init();
+        _LevelManager.Init();
 
+    }
     // Update is called once per frame
     void Update()
     {

@@ -20,7 +20,7 @@ public class NpcSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GameHandler.instance.AllNpcSpawners.Add(this);
 
     }
 

@@ -13,7 +13,7 @@ public class SharkPlayer : MonoBehaviour
     public List<Vector3> avrDir= new List<Vector3>();
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         instance = this;
     }
@@ -49,16 +49,20 @@ public class SharkPlayer : MonoBehaviour
         }
 
 
-
-        if (Vector2.Distance(new Vector2(wpPath[currentIndex].transform.position.x, wpPath[currentIndex].transform.position.z), new Vector2(transform.position.x, transform.position.z)) < 0.1f)
+        if (currentIndex < wpPath.Count && GameHandler.instance.GameHasEnded == false)
         {
-            currentIndex++;
+            if (Vector2.Distance(new Vector2(wpPath[currentIndex].transform.position.x, wpPath[currentIndex].transform.position.z), new Vector2(transform.position.x, transform.position.z)) < 0.1f)
+            {
+                currentIndex++;
+            }
+            if (currentIndex < wpPath.Count)
+            {
+                Vector3 targetPos = wpPath[currentIndex].transform.position;
+                targetPos.y = transform.position.y;
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4f);
+                transform.forward = Vector3.Lerp(transform.forward, (targetPos - transform.position).normalized, Time.deltaTime * 3);
+            }
         }
-        Vector3 targetPos = wpPath[currentIndex].transform.position;
-        targetPos.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4f);
 
-
-        transform.forward = Vector3.Lerp (transform.forward, (targetPos - transform.position).normalized ,Time.deltaTime*3);
     }
 }

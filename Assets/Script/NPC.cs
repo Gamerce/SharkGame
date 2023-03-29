@@ -221,6 +221,8 @@ public class NPC : MonoBehaviour
              power = 250;
              dir = transform.position - avgPos;
              adjustment = (SharkPlayer.instance.transform.forward + new Vector3(0, 1.5f, 0)) * power * 2;
+            GameHandler.instance._LevelManager.GameFinished();
+            GameHandler.instance.GameHasEnded = true;
         }
       
         force = new Vector3(dir.x* power, dir.y* power, dir.z* power)+ adjustment;

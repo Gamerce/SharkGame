@@ -81,7 +81,7 @@ public class OnCollisionObject : MonoBehaviour
                         _npc.ArmourParts.RemoveAt(0);
                         _npc.hitCount = 0;
                     }
-                    _npc._hitDelay = 0.4f;
+                    _npc._hitDelay = 0.05f;
                     _npc.hitCount++;
                 }
                 else
