@@ -21,6 +21,7 @@ public class GameHandler : MonoBehaviour
 
     public GameObject Shark;
     public GameObject NpcPrefab;
+    public GameObject BossPrefab;
 
     public GameObject sharkScoreObj;
     public TMPro.TMP_Text text;
@@ -28,6 +29,9 @@ public class GameHandler : MonoBehaviour
     float CurrentScore = 0;
 
     public List<NPC> AllNPC= new List<NPC>();
+
+    public List<NpcSpawner> AllNpcSpawners = new List<NpcSpawner>();
+
     // Start is called before the first frame update
     void Start()
     {

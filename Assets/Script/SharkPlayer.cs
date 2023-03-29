@@ -36,13 +36,16 @@ public class SharkPlayer : MonoBehaviour
 
 
 
-        for (int i = 0;i< GameHandler.instance.AllNPC.Count;i++)
+        for (int i = 0; i < GameHandler.instance.AllNpcSpawners.Count; i++)
         {
-            if(GameHandler.instance.AllNPC[i] != null)
-            if (Vector3.Distance(GameHandler.instance.AllNPC[i].transform.position, transform.position) < 1.7f)
-            {
+            if (GameHandler.instance.AllNpcSpawners[i].hasTriggered == false)
+                if (Vector3.Distance(GameHandler.instance.AllNpcSpawners[i].transform.position, transform.position) < 1.5f)
+                {
+                    GameHandler.instance.AllNpcSpawners[i].Trigger();
+                    return;
+                }
+            if(GameHandler.instance.AllNpcSpawners[i].isRunning)
                 return;
-            }
         }
 
 
@@ -53,9 +56,9 @@ public class SharkPlayer : MonoBehaviour
         }
         Vector3 targetPos = wpPath[currentIndex].transform.position;
         targetPos.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 2f);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4f);
 
 
-    transform.forward = Vector3.Lerp (transform.forward, (targetPos - transform.position).normalized ,Time.deltaTime*3);
+        transform.forward = Vector3.Lerp (transform.forward, (targetPos - transform.position).normalized ,Time.deltaTime*3);
     }
 }
