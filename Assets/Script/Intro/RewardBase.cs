@@ -19,6 +19,7 @@ public class RewardBase : MonoBehaviour
 	public float pulseVelocity = 0.1f;
 	public AnimationCurve pulseCurve = Extensions.GetShakeCurve(6, 1, Extensions.GetFlatCurve(1));
 	bool updateText = false;
+	bool fadeOutWhenDone = false;
 
 	public BoundingSphereHelper sphereHelper;
 	public CanvasGroup groupCanvas;
@@ -27,6 +28,7 @@ public class RewardBase : MonoBehaviour
 	public GameObject eatCheese;
 
 	public HatData allhats;
+	System.Action onDone;
 
 	public List<GameObject> hatObjects = new List<GameObject>();
 	public int currentHat = -1;
@@ -38,7 +40,9 @@ public class RewardBase : MonoBehaviour
 		continueButton.alpha = 0;
     }
 
-	public void Init(int rewardAmount){
+	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+		this.onDone = onDone;
+		this.fadeOutWhenDone = fadeOutWhenDone;
 		for(int index = 0; index < hatObjects.Count; index++)
 			hatObjects[index].SetActive(false);
 		for(int index = 0; index < allhats.allHats.Count; index++){
@@ -134,8 +138,30 @@ public class RewardBase : MonoBehaviour
 		}
     }
 
-
+	[System.NonSerialized]
+	bool allowLevelClick = true;
 	public void NextLevelClicked(){
-		//Do things.
+		if(allowLevelClick) {
+			allowLevelClick = false;
+			if(fadeOutWhenDone){
+				UTween temp = UTween.Fade(groupCanvas, new Vector2(groupCanvas.alpha, 0), 0.3f);
+				temp.onDone = ()=>{
+					allowLevelClick = true;
+					if(onDone != null){
+						System.Action temp = onDone;
+						onDone = null;
+						temp.Invoke();
+					}
+				};
+			}
+			else{
+				allowLevelClick = true;
+				if(onDone != null){
+					System.Action temp = onDone;
+					onDone = null;
+					temp.Invoke();
+				}
+			}
+		}
 	}
 }

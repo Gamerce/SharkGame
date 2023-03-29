@@ -43,7 +43,7 @@ public class IntroManager : MonoBehaviour
 		GameObject temp = Instantiate(rewardBasePrefab);
 		temp.SetActive(true);
 		RewardBase baseVal = temp.GetComponent<RewardBase>();
-		baseVal.Init((int)Random.Range(10,15));
+		baseVal.Init((int)Random.Range(10,15), null);
 
 		for(int index = 0; index < introObjects.Count; index++){
 			introObjects[index].SetActive(false);
