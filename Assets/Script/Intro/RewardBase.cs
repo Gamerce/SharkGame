@@ -41,6 +41,7 @@ public class RewardBase : MonoBehaviour
     }
 
 	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+		gameObject.SetActive(true);
 		this.onDone = onDone;
 		this.fadeOutWhenDone = fadeOutWhenDone;
 		for(int index = 0; index < hatObjects.Count; index++)
