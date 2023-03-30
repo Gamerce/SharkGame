@@ -61,6 +61,8 @@ public class RewardBase : MonoBehaviour
 				break;
 			}
 		}
+		if(currentHat < 0)
+			currentHat = 0;
 
 		displayParent.gameObject.SetActive(false);
 		//if(targetObj != null){
