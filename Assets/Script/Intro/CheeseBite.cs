@@ -67,7 +67,7 @@ public class CheeseBite : MonoBehaviour
 	}
 
 	public void TakeBite(GameObject target, bool useLastBite = false){
-		UTween hideObj = UTween.Wait(gameObject, 0.3f, ()=>{
+		UTween hideObj = UTween.Wait(gameObject, 0.05f, ()=>{
 			target.SetActive(false);
 		});
 		UTween temp = UTween.MoveTo(transform, startPos - (target.transform.position - startPos)/2, 0.7f, true);

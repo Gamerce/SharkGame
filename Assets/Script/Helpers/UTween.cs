@@ -131,6 +131,19 @@ public class UTween : MonoBehaviour
 		}
 		return true;
 	}
+	
+	public static void Clear(Transform target){
+		Clear(target.gameObject);
+	}
+
+	public static void Clear(GameObject target){
+		UTween[] all = target.GetComponents<UTween>();
+		if(all != null){
+			for(int index = 0; index < all.Length; index++){
+				Destroy(all[index]);
+			}
+		}
+	}
 
 	public static UTween DestroyAfter(GameObject targetObj, float duration){
 		UTween tween = targetObj.AddComponent<UTween>();

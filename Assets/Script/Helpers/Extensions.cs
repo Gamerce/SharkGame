@@ -212,6 +212,128 @@ public static class Extensions {
 
 	#endregion
 
+	#region int
+
+	
+	static public bool IsInBound(this int value, int minInclusive, int maxInclusive)
+	{
+		return value >= minInclusive && value <= maxInclusive;
+	}
+
+	static public bool IsInBound<Type>(this int value, List<Type> list)
+	{
+		if(list == null)
+			return false;
+		return value >= 0 && value < list.Count;
+	}
+
+	#endregion
+
+
+	#region string
+
+
+	static public bool Compare(this string value, string compareTo, bool caseSensetive, bool matchFull, bool splitCaptials)
+	{
+		bool hasTested = false;
+		if(splitCaptials)
+		{
+			for(int index = 0; index < compareTo.Length; index++)
+			{
+				if(char.IsUpper(compareTo[index]) || index == 0){
+					if(index+1 == compareTo.Length)
+					{
+						hasTested = true;
+						if(!value.Compare(compareTo.GetString(index, index+1), caseSensetive,matchFull))
+							return false;
+					}
+					else
+					{
+						for(int innerIndex = index+1; innerIndex < compareTo.Length; innerIndex++)
+						{
+							if(char.IsUpper(compareTo[innerIndex]) || innerIndex+1 == compareTo.Length)
+							{
+								hasTested = true;
+								if(!value.Compare(compareTo.GetString(index, innerIndex), caseSensetive,matchFull))
+									return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			return Compare(value, compareTo, caseSensetive, matchFull);
+		}
+		return hasTested;
+	}
+
+
+
+	static public bool Compare(this string value, string compareTo, bool caseSensetive, bool matchFull)
+	{
+		if(matchFull && caseSensetive){
+			if(value == compareTo){
+				return true;
+			}
+		}
+		else if(matchFull && !caseSensetive){
+			if(value.ToLower() == compareTo.ToLower()){
+				return true;
+			}
+		}
+		else if(caseSensetive && !matchFull){
+			if(value.Contains(compareTo)){
+				return true;
+			}
+		}
+		else{
+			if(value.ToLower().Contains(compareTo.ToLower())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	static public string GetString(this string thisVal, int minInclusive, int maxExclusive)
+	{
+		string temp = "";
+		for(int index = minInclusive; index < maxExclusive; index++)
+		{
+			temp += thisVal[index];
+		}
+		return temp;
+	}
+	static public bool Contains(this List<string> value, string compareTo, bool caseSensetive, bool matchFull)
+	{
+		for(int index = 0; index < value.Count; index++){
+			if(value[index].Compare(compareTo, caseSensetive, matchFull))
+				return true;
+		}
+		return false;
+	}
+
+	#endregion
+
+	#region Transform
+
+	static public Transform FindChildTrans(this Transform thisVal, string childName, bool caseSensitive = true, bool matchFull = true)
+	{
+		for(int index = 0; index < thisVal.childCount; index++)
+		{
+			Transform child = thisVal.GetChild(index);
+			if(child.name.Compare(childName, caseSensitive, matchFull))
+				return child;
+			Transform result = child.FindChildTrans(childName, caseSensitive, matchFull);
+			if(result != null)
+				return result;
+		}
+		return null;
+	}
+
+	#endregion
+
 	#region List<TMPro.TextMeshPro>
 
 	static public void SetText(this List<TMPro.TextMeshPro> thisVal, string target){

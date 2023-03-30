@@ -13,10 +13,14 @@ public class IntroManager : MonoBehaviour
 
 	public List<GameObject> introObjects = new List<GameObject>();
 
+	public Animator sharkAnim;
+	float nextSharkAnimIn = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        sharkAnim.SetLayerWeight(1, 1);
+		sharkAnim.Play("SharkIntroAnim", 1, 0);
     }
 
     // Update is called once per frame
@@ -32,10 +36,15 @@ public class IntroManager : MonoBehaviour
 					LoadNextScene();
 			};
 		}
+		nextSharkAnimIn -= Time.deltaTime;
+		if(nextSharkAnimIn <= 0){
+			nextSharkAnimIn += Random.Range(1,1.3f);
+			sharkAnim.Play("Bite", 0);
+		}
     }
 
 	public void LoadNextScene(){
-		 SceneManager.LoadScene("CompleteTown 1", LoadSceneMode.Single);
+		 SceneManager.LoadScene("CompleteTownMovemntTest", LoadSceneMode.Single);
 	}
 
 	public void TestReward(){

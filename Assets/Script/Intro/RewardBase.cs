@@ -27,20 +27,27 @@ public class RewardBase : MonoBehaviour
 	public CoinSpawner coinSpawner;
 	public GameObject eatCheese;
 
+	public UnityEngine.UI.Image fadeFrom;
 	public HatData allhats;
 	System.Action onDone;
 
 	public List<GameObject> hatObjects = new List<GameObject>();
 	public int currentHat = -1;
 
-    // Start is called before the first frame update
-    void Start()
+	#region HatSelector
+	public SelectHat hatSelector;
+	#endregion
+
+	// Start is called before the first frame update
+	void Start()
     {
-		groupCanvas.alpha = 0;
-		continueButton.alpha = 0;
+		//groupCanvas.alpha = 0;
+		//continueButton.alpha = 0;
     }
 
 	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+		hatSelector.camDisplayRoot.gameObject.SetActive(true);
+		hatSelector.renderCam.gameObject.SetActive(true);
 		gameObject.SetActive(true);
 		this.onDone = onDone;
 		this.fadeOutWhenDone = fadeOutWhenDone;
@@ -78,7 +85,7 @@ public class RewardBase : MonoBehaviour
 				}
 
 		
-				UTween.Fade(groupCanvas, new Vector2(0,1), 0.75f);
+				//UTween.Fade(groupCanvas, new Vector2(0,1), 0.75f);
 				continueButton.gameObject.SetActive(false);
 				continueButton.alpha = 0;
 				//toSetVal.SetValue(0);
@@ -110,13 +117,16 @@ public class RewardBase : MonoBehaviour
 
 	public void EatCheeseDone(){
 		groupCanvas.gameObject.SetActive(true);
+		groupCanvas.alpha = 1;
 		eatCheese.SetActive(false);
 		displayParent.gameObject.SetActive(true);
+		fadeFrom.color = Color.black;
+		UTween.Fade(fadeFrom, new Vector2(1,0), 0.3f);
 	}
 
 	private void OnEnable() {
-		groupCanvas.alpha = 0;
-		continueButton.alpha = 0;
+		//groupCanvas.alpha = 0;
+		//continueButton.alpha = 0;
 		//sphereHelper.RecalcFull();
 	}
 
@@ -165,4 +175,15 @@ public class RewardBase : MonoBehaviour
 			}
 		}
 	}
+
+	#region HatSelector
+	
+	public void ShowHatSelector(System.Action callback){
+		hatSelector.Init(callback);
+	}
+	public void ShowHatSelector(){
+		hatSelector.Init(null);
+	}
+
+	#endregion
 }
