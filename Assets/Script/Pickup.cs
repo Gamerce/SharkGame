@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Pickup : MonoBehaviour
@@ -8,23 +9,40 @@ public class Pickup : MonoBehaviour
     public GameObject pickupeffect;
     float collisionTimer = 0;
     public GameObject TargetTransform;
+    public ProceduralMeshExploder.MeshExploder _meshExploder;
     // Start is called before the first frame update
+    MeshRenderer _MeshRenderer;
     void Start()
     {
-        GetComponent<BoxCollider>().enabled = false;
+        _MeshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        _MeshRenderer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.Rotate(new Vector3(0,1,0),Time.deltaTime*speed,Space.World);
-        collisionTimer += Time.deltaTime;
-        if(collisionTimer>1)
-        {
-            GetComponent<BoxCollider>().enabled = true;
-        }
+        //collisionTimer += Time.deltaTime;
+        //if(collisionTimer>1)
+        //{
+        //    GetComponent<BoxCollider>().enabled = true;
+        //}
 
-        transform.position = Vector3.Lerp(transform.position, TargetTransform.transform.position, Time.deltaTime * 3);
+        //transform.position = Vector3.Lerp(transform.position, TargetTransform.transform.position, Time.deltaTime * 3);
+
+
+
+        float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(SharkPlayer.instance.transform.position.x, SharkPlayer.instance.transform.position.z));
+
+
+        if(dist<8 && _MeshRenderer.gameObject.activeSelf == false)
+        {
+            _MeshRenderer.gameObject.SetActive( true);
+            Vector3 endPos = transform.position;
+            transform.position = endPos + new Vector3(0,100,0);
+            transform.DOMove(endPos, 1f);
+        }
+  
 
     }
     void OnCollisionEnter(Collision collision)
@@ -32,8 +50,9 @@ public class Pickup : MonoBehaviour
  
         if(collision.gameObject.name.Contains("HitBox"))
         {
-            GameObject go = GameObject.Instantiate(pickupeffect, transform.position, Quaternion.identity);
-            go.transform.parent = transform.parent;
+            //GameObject go = GameObject.Instantiate(pickupeffect, transform.position, Quaternion.identity);
+            //go.transform.parent = transform.parent;
+            _meshExploder.Explode();
             Destroy(gameObject);
         }
 

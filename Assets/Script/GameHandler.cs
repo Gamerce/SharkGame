@@ -56,12 +56,12 @@ public class GameHandler : MonoBehaviour
     void Update()
     {
 
-        spawnTimer -= Time.deltaTime;
-        if(spawnTimer<0)
-        {
-            SpawnCheese();
-            spawnTimer = Random.Range(5, 10);
-        }
+        //spawnTimer -= Time.deltaTime;
+        //if(spawnTimer<0)
+        //{
+        //    SpawnCheese();
+        //    spawnTimer = Random.Range(5, 10);
+        //}
 
 
 
@@ -74,21 +74,21 @@ public class GameHandler : MonoBehaviour
     public int shakeVibrato = 20;
     public float shakeRandomness = 0;
 
-    public void SpawnCheese()
-    {
-        int randIndex = Random.Range(0, CheeseSpawnPoints.Count);
-        Vector3 randPos = CheeseSpawnPoints[randIndex].position;
-        GameObject go= GameObject.Instantiate(CheesePefab, randPos,Quaternion.identity);
-        go.transform.parent = _SharkPlayer.transform;
-        if(randIndex == 0 || randIndex == 1)
-            go.transform.position = randPos + Camera.main.transform.right * 2;
-        else
-            go.transform.position = randPos - Camera.main.transform.right * 2;
+    //public void SpawnCheese()
+    //{
+    //    int randIndex = Random.Range(0, CheeseSpawnPoints.Count);
+    //    Vector3 randPos = CheeseSpawnPoints[randIndex].position;
+    //    GameObject go= GameObject.Instantiate(CheesePefab, randPos,Quaternion.identity);
+    //    go.transform.parent = _SharkPlayer.transform;
+    //    if(randIndex == 0 || randIndex == 1)
+    //        go.transform.position = randPos + Camera.main.transform.right * 2;
+    //    else
+    //        go.transform.position = randPos - Camera.main.transform.right * 2;
 
-        go.GetComponent<Pickup>().TargetTransform = CheeseSpawnPoints[randIndex].gameObject;
+    //    go.GetComponent<Pickup>().TargetTransform = CheeseSpawnPoints[randIndex].gameObject;
 
-        go.transform.DOMove(randPos, 0.5f);
-    }
+    //    go.transform.DOMove(randPos, 0.5f);
+    //}
     public void GiveScore(float aTime = 0)
     {
 
