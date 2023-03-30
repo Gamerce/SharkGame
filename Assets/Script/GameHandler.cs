@@ -22,6 +22,10 @@ public class GameHandler : MonoBehaviour
     public GameObject Shark;
     public GameObject NpcPrefab;
     public GameObject BossPrefab;
+    public GameObject hitEffect;
+
+    public TMPro.TMP_Text ScoreText;
+    public GameObject ScoreCan;
 
     public GameObject sharkScoreObj;
     public TMPro.TMP_Text text;
@@ -37,6 +41,9 @@ public class GameHandler : MonoBehaviour
     public bool GameHasEnded = false;
     public GameObject CheesePefab;
     public List<Transform> CheeseSpawnPoints;
+    public GameObject WinEffect;
+
+    public int CurrentCanScore = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -64,9 +71,13 @@ public class GameHandler : MonoBehaviour
         //}
 
 
+        ScoreCan.transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * 100, Space.World);
 
 
-
+        if( Input.GetKeyUp(KeyCode.D) )
+        {
+            AddScore();
+        }
     }
 
     public float effectDuration = 0.3f;
@@ -117,5 +128,18 @@ public class GameHandler : MonoBehaviour
 
         //yield return new WaitForSeconds(0.05f);
         text.transform.DOShakePosition(effectDuration, new Vector3(shakeStrength, 0, 0), shakeVibrato, shakeRandomness);
+    }
+
+    public float d;
+    public float s;
+    public int v;
+    public float r;
+    public void AddScore()
+    {
+
+        CurrentCanScore += 1;
+        ScoreText.text = CurrentCanScore.ToString();
+
+        ScoreText.transform.DOShakeScale(d, s, v, r);
     }
 }

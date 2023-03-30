@@ -54,6 +54,17 @@ public class Pickup : MonoBehaviour
             //go.transform.parent = transform.parent;
             _meshExploder.Explode();
             Destroy(gameObject);
+
+            ContactPoint contact = collision.contacts[0];
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 position = contact.point;
+
+
+            GameObject go = GameObject.Instantiate(GameHandler.instance.hitEffect);
+            go.transform.position = transform.position;
+            go.SetActive(true);
+
+            GameHandler.instance.AddScore();
         }
 
     }

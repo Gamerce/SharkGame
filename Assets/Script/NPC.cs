@@ -119,7 +119,8 @@ public class NPC : MonoBehaviour
                     if(hasGivenScore == false)
                     {
                         hasGivenScore = true;
-                        GameHandler.instance.GiveScore(0f);
+                        if( isBoss == false)
+                            GameHandler.instance.GiveScore(0f);
 
                     }
                     _npcspawner.spawnedChars.Remove(this);
