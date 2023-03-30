@@ -35,6 +35,9 @@ public class GameHandler : MonoBehaviour
     public SharkPlayer _SharkPlayer;
     public RewardBase _rewardBase;
     public bool GameHasEnded = false;
+    public GameObject CheesePefab;
+    public List<Transform> CheeseSpawnPoints;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,13 +51,22 @@ public class GameHandler : MonoBehaviour
         _LevelManager.Init();
 
     }
+    float spawnTimer = 0;
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.S))
+
+        spawnTimer -= Time.deltaTime;
+        if(spawnTimer<0)
         {
-            GiveScore();
+            SpawnCheese();
+            spawnTimer = Random.Range(5, 10);
         }
+
+
+
+
+
     }
 
     public float effectDuration = 0.3f;
@@ -62,7 +74,21 @@ public class GameHandler : MonoBehaviour
     public int shakeVibrato = 20;
     public float shakeRandomness = 0;
 
+    public void SpawnCheese()
+    {
+        int randIndex = Random.Range(0, CheeseSpawnPoints.Count);
+        Vector3 randPos = CheeseSpawnPoints[randIndex].position;
+        GameObject go= GameObject.Instantiate(CheesePefab, randPos,Quaternion.identity);
+        go.transform.parent = _SharkPlayer.transform;
+        if(randIndex == 0 || randIndex == 1)
+            go.transform.position = randPos + Camera.main.transform.right * 2;
+        else
+            go.transform.position = randPos - Camera.main.transform.right * 2;
 
+        go.GetComponent<Pickup>().TargetTransform = CheeseSpawnPoints[randIndex].gameObject;
+
+        go.transform.DOMove(randPos, 0.5f);
+    }
     public void GiveScore(float aTime = 0)
     {
 
