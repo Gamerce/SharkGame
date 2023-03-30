@@ -34,14 +34,19 @@ public class LevelManager : MonoBehaviour
     }
     IEnumerator EndAfterTime(float time)
     {
-        yield return new WaitForSeconds(time);
+
+
+        yield return new WaitForSeconds(0.95f);
+        GameHandler.instance.WinEffect.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
         GameHandler.instance._rewardBase.Init(10, LoadNextScene, true);
     }
 
     public void GameFinished()
     {
         // Load new scene
-        StartCoroutine(EndAfterTime(2f));
+
+        StartCoroutine(EndAfterTime(1f));
 
     }
     public void LoadNextScene()
