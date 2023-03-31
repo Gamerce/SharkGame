@@ -18,6 +18,9 @@ public class OnHitTriggerEvent : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
+        if (enabled == false)
+            return;
+
         //gameObject.SetActive(false);
         enableObj.SetActive(true);
         gameObject.GetComponent<MeshRenderer>().enabled = false;

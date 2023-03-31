@@ -16,6 +16,7 @@ public class NpcSpawner : MonoBehaviour
 
     public List<NPC> spawnedChars = new List<NPC>();
 
+    public MonoBehaviour EnableOnTrigger=null;
     public bool isBoss = false;
     // Start is called before the first frame update
     void Start()
@@ -50,6 +51,9 @@ public class NpcSpawner : MonoBehaviour
         SpawnEnemy();
         hasTriggered = true;
         isRunning = true;
+
+        if (EnableOnTrigger != null)
+            EnableOnTrigger.enabled = true;
     }
     int currentpath = 0;
     public void SpawnEnemy()

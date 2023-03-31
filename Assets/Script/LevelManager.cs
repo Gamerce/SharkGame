@@ -9,10 +9,19 @@ public class LevelManager : MonoBehaviour
     public int CurrentLevel = 0;
     public TMPro.TMP_Text levelText;
 
+    public int ForceLevel = -1;
+
+    public GameObject TrainGO;
+    
     // Start is called before the first frame update
     public void Init()
     {
+
         CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
+        if (ForceLevel != -1)
+        {
+            CurrentLevel = ForceLevel;
+        }
         //CurrentLevel = 1;
         LoadLevel(CurrentLevel);
     }
@@ -31,10 +40,21 @@ public class LevelManager : MonoBehaviour
         SharkPlayer.instance.transform.rotation = Quaternion.Euler ( Levels[aLevel].PlayerRotation);
         SharkPlayer.instance.wpPath.Clear();
         SharkPlayer.instance.wpPath = Levels[aLevel].wpPath;
+
+
+        if(CurrentLevel == 2)
+        {
+            TrainGO.GetComponent<Animator>().Play("trainIdle");
+        }
     }
     IEnumerator EndAfterTime(float time)
     {
 
+        if (CurrentLevel == 2)
+        {
+            yield return new WaitForSeconds(0.2f);
+            TrainGO.GetComponent<Animator>().Play("trainHit");
+        }
 
         yield return new WaitForSeconds(0.95f);
         GameHandler.instance.WinEffect.SetActive(true);
