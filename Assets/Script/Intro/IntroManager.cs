@@ -43,6 +43,11 @@ public class IntroManager : MonoBehaviour
 		}
     }
 
+	[ContextMenu("DeleteAllPlayerPrefs")]
+	public void DeleteAllPlayerPrefs(){
+		PlayerPrefs.DeleteAll();
+	}
+
 	public void LoadNextScene(){
 		 SceneManager.LoadScene("CompleteTownMovemntTest", LoadSceneMode.Single);
 	}

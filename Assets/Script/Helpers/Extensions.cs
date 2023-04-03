@@ -15,6 +15,12 @@ public static class Extensions {
 		else
 			return new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(1,1)});
 	}
+	static public AnimationCurve GetBowCurve(bool slowStart = true){
+		if(slowStart)
+			return new AnimationCurve(new Keyframe[]{new Keyframe(1,1,2,0), new Keyframe(0,0, 0, 0)});
+		else
+			return new AnimationCurve(new Keyframe[]{new Keyframe(0,0,0,2), new Keyframe(1,1, 0, 0)});
+	}
 	
 	static public AnimationCurve GetInOutFadeCurve(float fadePercent = 0.1f, bool reversed = false){
 		if(reversed)
@@ -43,6 +49,24 @@ public static class Extensions {
 		Keyframe temp = new Keyframe(0,0);
 		frames.Insert(0, temp);
 		temp = new Keyframe(1,0);
+		frames.Add(temp);
+		return new AnimationCurve(frames.ToArray());
+	}
+	static public AnimationCurve GetBaselineShakeCurve(int shakes, float velocity, AnimationCurve evaluator = null, AnimationCurve baseLine = null){
+		if(evaluator == null)
+			evaluator = new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(0.5f,1), new Keyframe(1,0)});
+		if(baseLine == null)
+			baseLine = new AnimationCurve(new Keyframe[]{new Keyframe(0,1), new Keyframe(1,1)});
+		List<Keyframe> frames = new List<Keyframe>();
+		for(int index = 0; index < shakes*2-1+1; index+=2){
+			float pos = ((float)(index)+0.5f) / (float)(shakes * 2);
+			float pos2 = ((float)(index+1)+0.5f) / (float)(shakes * 2);
+			frames.Add(new Keyframe(pos, baseLine.Evaluate(pos) + velocity * evaluator.Evaluate(pos) * Mathf.Cos(((float)index) * Mathf.PI)));
+			frames.Add(new Keyframe(pos2, baseLine.Evaluate(pos) +  velocity * evaluator.Evaluate(pos2) * Mathf.Cos(((float)index+1) * Mathf.PI)));
+		}
+		Keyframe temp = new Keyframe(0,baseLine.Evaluate(0));
+		frames.Insert(0, temp);
+		temp = new Keyframe(1,baseLine.Evaluate(1));
 		frames.Add(temp);
 		return new AnimationCurve(frames.ToArray());
 	}
@@ -76,7 +100,26 @@ public static class Extensions {
 	}
 
 	#endregion
+	
+	#region RenderTexture
 
+	static public void Save(this RenderTexture target, string location, string name){
+		
+		Texture2D texture = new Texture2D(target.width, target.height, TextureFormat.ARGB32, false);
+		RenderTexture old = RenderTexture.active;
+		RenderTexture.active = target;
+		texture.ReadPixels(new Rect(0,0,target.width, target.height),0,0);
+		RenderTexture.active = old;
+		//then Save To Disk as PNG
+		byte[] bytes = texture.EncodeToPNG();
+		var dirPath = location;
+		if(!System.IO.Directory.Exists(dirPath)) {
+			System.IO.Directory.CreateDirectory(dirPath);
+		}
+		System.IO.File.WriteAllBytes(dirPath + name + ".png", bytes);
+	}
+
+	#endregion
 
 	#region Float
 

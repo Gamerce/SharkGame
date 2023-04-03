@@ -26,11 +26,14 @@ public class CheeseEater : MonoBehaviour
 	GameObject nextTarget;
 	bool isLast = false;
 	float canClickIn = -1;
+
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
+
 
 	private void OnEnable() {
 		bite.Init();

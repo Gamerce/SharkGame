@@ -9,7 +9,10 @@ public class RewardBase : MonoBehaviour
 	public Vector2 minMaxVal;
 	
 	public List<TMPro.TextMeshProUGUI> percentText = new List<TMPro.TextMeshProUGUI>();
+	public TextValue totalCoinAmount;
+	public BounceUp canBouncer;
 	public List<TMPro.TextMeshProUGUI> goldGainAmount = new List<TMPro.TextMeshProUGUI>();
+	public List<TMPro.TextMeshProUGUI> goldTotalAmount = new List<TMPro.TextMeshProUGUI>();
 	SmoothFloat toSetVal = new SmoothFloat(0);
 
 	[Range(0,1)]
@@ -43,12 +46,19 @@ public class RewardBase : MonoBehaviour
     {
 		//groupCanvas.alpha = 0;
 		//continueButton.alpha = 0;
+		totalCoinAmount.SetAmount(PlayerPrefs.GetInt("CoinAmount", 0));
     }
 
 	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+		PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount", 0) + rewardAmount);
+		//totalCoinAmount.AddAmount(rewardAmount);
 		hatSelector.camDisplayRoot.gameObject.SetActive(true);
 		hatSelector.renderCam.gameObject.SetActive(true);
 		gameObject.SetActive(true);
+		for(int index = 0; index < goldGainAmount.Count; index++){
+			goldGainAmount[index].text = rewardAmount.ToString();
+		}
+
 		this.onDone = onDone;
 		this.fadeOutWhenDone = fadeOutWhenDone;
 		for(int index = 0; index < hatObjects.Count; index++)
@@ -106,10 +116,15 @@ public class RewardBase : MonoBehaviour
 						continueButton.gameObject.SetActive(true);
 						UTween.Fade(continueButton, new Vector2(0,1), 0.5f);
 					});
-					coinSpawner.StartSpawn(10);
+					coinSpawner.StartSpawn(rewardAmount);
 				});
 			};
 		}
+	}
+
+	public void AddACoin(){
+		totalCoinAmount.AddNow(1);
+		canBouncer.AddBounce(1.5f);
 	}
 
 	[ContextMenu("Reset Curve")]
@@ -161,18 +176,18 @@ public class RewardBase : MonoBehaviour
 				temp.onDone = ()=>{
 					allowLevelClick = true;
 					if(onDone != null){
-						System.Action temp = onDone;
+						System.Action temp2 = onDone;
 						onDone = null;
-						temp.Invoke();
+						temp2.Invoke();
 					}
 				};
 			}
 			else{
 				allowLevelClick = true;
 				if(onDone != null){
-					System.Action temp = onDone;
+					System.Action temp2 = onDone;
 					onDone = null;
-					temp.Invoke();
+					temp2.Invoke();
 				}
 			}
 		}
