@@ -8,7 +8,8 @@ public enum GizomType
 {
 WP,
 SpawnPoint,
-Can
+Can,
+EntryWP
 };
 
 public class GizmoDrawing : MonoBehaviour
@@ -39,6 +40,40 @@ public class GizmoDrawing : MonoBehaviour
                     Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f), ld.wpPath[i + 1].transform.position);
                     Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 2, ld.wpPath[i + 1].transform.position);
                     Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 3, ld.wpPath[i + 1].transform.position);
+                }
+            }
+        }
+        if (myType == GizomType.EntryWP)
+        {
+            Vector3 position = transform.position;
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(position, 0.3f);
+
+            NpcSpawner ld = transform.parent.parent.GetComponent<NpcSpawner>();
+            if(ld == null)
+                ld = transform.parent.GetComponent<NpcSpawner>();
+
+
+            for (int i = 0; i < ld.wpPath.Count - 1; i++)
+            {
+                if (ld.wpPath[i].transform == transform)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(this.gameObject.transform.position, ld.wpPath[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f), ld.wpPath[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 2, ld.wpPath[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 3, ld.wpPath[i + 1].transform.position);
+                }
+            }
+            for (int i = 0; i < ld.wpPath2.Count - 1; i++)
+            {
+                if (ld.wpPath2[i].transform == transform)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(this.gameObject.transform.position, ld.wpPath2[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f), ld.wpPath2[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 2, ld.wpPath2[i + 1].transform.position);
+                    Gizmos.DrawLine(this.gameObject.transform.position + new Vector3(0.01f, 0.01f, 0.01f) * 3, ld.wpPath2[i + 1].transform.position);
                 }
             }
         }

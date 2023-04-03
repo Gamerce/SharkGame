@@ -42,6 +42,8 @@ public class GameHandler : MonoBehaviour
     public GameObject CheesePefab;
     public List<Transform> CheeseSpawnPoints;
     public GameObject WinEffect;
+    public GameObject BoomEffect;
+    public GameObject SharkHeadEat;
 
     public int CurrentCanScore = 0;
 
@@ -58,10 +60,23 @@ public class GameHandler : MonoBehaviour
         _LevelManager.Init();
 
     }
+    public float isSlowmotion = 0;
+    public void SetSlowMotion()
+    {
+        isSlowmotion = 0.5f;
+    }
     float spawnTimer = 0;
     // Update is called once per frame
     void Update()
     {
+        if(isSlowmotion<=0)
+        {
+            Time.timeScale = 1f;
+        }else
+        {
+            Time.timeScale = 0.02f;
+            isSlowmotion -= Time.unscaledDeltaTime;
+        }
 
         //spawnTimer -= Time.deltaTime;
         //if(spawnTimer<0)
@@ -111,8 +126,8 @@ public class GameHandler : MonoBehaviour
     IEnumerator GiveScoreAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
-        sharkScoreObj.SetActive(false);
-        sharkScoreObj.SetActive(true);
+        //sharkScoreObj.SetActive(false);
+        //sharkScoreObj.SetActive(true);
         StartCoroutine(ExecuteAfterTime(0.2f));
     }
    IEnumerator ExecuteAfterTime(float time)
@@ -123,8 +138,8 @@ public class GameHandler : MonoBehaviour
   
 
 
-        bloodEffect.SetActive(false);
-        bloodEffect.SetActive(true);
+        //bloodEffect.SetActive(false);
+        //bloodEffect.SetActive(true);
 
         //yield return new WaitForSeconds(0.05f);
         text.transform.DOShakePosition(effectDuration, new Vector3(shakeStrength, 0, 0), shakeVibrato, shakeRandomness);

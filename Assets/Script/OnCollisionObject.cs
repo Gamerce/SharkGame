@@ -126,6 +126,33 @@ public class OnCollisionObject : MonoBehaviour
         else
         {
            _npc.LandEffect(collision);
+            if(collision.gameObject.name ==  "Train_Back" && _npc.isBoss)
+            {
+
+                 collision.transform.parent.GetChild(0).gameObject.GetComponent<MeshCollider>().enabled = false;
+                collision.transform.parent.GetChild(1).gameObject.GetComponent<MeshCollider>().enabled = false;
+                collision.transform.parent.GetChild(2).gameObject.GetComponent<MeshCollider>().enabled = false;
+
+
+                for (int i = 0; i < _npc.allRG.Length; i++)
+                {
+
+                    _npc.allRG[i].AddForceAtPosition(new Vector3(0, 0.5f, -1) * 800, transform.position);
+                }
+                GameObject go= GameObject.Instantiate(GameHandler.instance.BoomEffect, _npc.allRG[0].transform.position+ new Vector3(0,0,0.5f), Quaternion.identity);
+                go.SetActive(true);
+                GameHandler.instance.SetSlowMotion();
+            }
+            if (collision.gameObject.name == "HotAirBalloon_BlueFLY" && _npc.isBoss)
+            {
+                collision.gameObject.GetComponent<Animator>().enabled = true;
+                GameObject go = GameObject.Instantiate(GameHandler.instance.BoomEffect, _npc.allRG[0].transform.position + new Vector3(0, 0, 0.5f),Quaternion.Euler(180,0,0));
+                go.SetActive(true);
+                _npc.FollowObject(collision.gameObject);
+            }
+
+                
+
         }
     }
 }

@@ -44,6 +44,16 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(obToFollow != null)
+        {
+            transform.position = obToFollow.transform.position + offsetToFollow;
+            return;
+        }
+
+
+
+
         _hitDelay -= Time.deltaTime;
         //if(Input.GetKeyUp(KeyCode.T))
         //{
@@ -129,6 +139,21 @@ public class NPC : MonoBehaviour
     
             }
 
+
+            if(allRG[0].transform.position.y >6&& hasTriggeredEat == false && isBoss == false)
+            {
+                GameHandler.instance.SharkHeadEat.transform.position = new Vector3(allRG[0].transform.position.x,GameHandler.instance.SharkHeadEat.transform.position.y, allRG[0].transform.position.z);
+
+
+                GameHandler.instance.SharkHeadEat.SetActive(false);
+                GameHandler.instance.SharkHeadEat.SetActive(true);
+                GameHandler.instance.SharkHeadEat.transform.GetChild(0).GetComponent<Animator>().Play("SharkEatBodyAnimation");
+                GameHandler.instance.SharkHeadEat.GetComponent<EatPeopleHeadFollow>().SetFollow(allRG[0].transform, this);
+                //GameHandler.instance.SharkHeadEat.transform.position += Camera.main.transform.forward * 1.5f;
+
+                hasTriggeredEat = true;
+            }
+
             return;
         }
 
@@ -149,6 +174,7 @@ public class NPC : MonoBehaviour
 
 
     }
+    bool hasTriggeredEat = false;
     bool hasGivenScore = false;
     public int hitCount = 0;
     float _hitTimer = 0;
@@ -306,7 +332,21 @@ public class NPC : MonoBehaviour
         }
 
     }
+    public GameObject obToFollow=null;
+    public Vector3 offsetToFollow;
+    public void FollowObject(GameObject follow)
+    {
+        obToFollow = follow;
+        offsetToFollow = transform.position - obToFollow.transform.position;
 
+        GetComponent<Animator>().enabled = false;
+        for (int i = 0; i < allRG.Length; i++)
+        {
+            allRG[i].isKinematic = true;
+            
+        }
+
+    }
 
 
 }

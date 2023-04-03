@@ -41,6 +41,12 @@ public class LevelManager : MonoBehaviour
         SharkPlayer.instance.wpPath.Clear();
         SharkPlayer.instance.wpPath = Levels[aLevel].wpPath;
 
+        if(Levels[aLevel].PlayerStartTransform != null)
+        {
+            SharkPlayer.instance.transform.position = Levels[aLevel].PlayerStartTransform.position;
+            SharkPlayer.instance.transform.rotation = Levels[aLevel].PlayerStartTransform.rotation;
+        }
+
 
         if(CurrentLevel == 2)
         {
