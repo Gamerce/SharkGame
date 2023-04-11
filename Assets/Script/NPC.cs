@@ -46,8 +46,11 @@ public class NPC : MonoBehaviour
         }
 
         GetComponent<Animator>().Play("landing");
+        if(isBoss)
+            MusicManager.instance.PlayAudioClip(4, 0.0f, 0.5f);
 
-        if(RandomBodies != null && RandomBodies.Count>0)
+
+        if (RandomBodies != null && RandomBodies.Count>0)
         {
             for (int i = 0; i < RandomBodies.Count; i++)
             {
@@ -297,6 +300,9 @@ public class NPC : MonoBehaviour
              adjustment = (SharkPlayer.instance.transform.forward + new Vector3(0, 1.5f, 0)) * power * 2;
             GameHandler.instance._LevelManager.GameFinished();
             GameHandler.instance.GameHasEnded = true;
+
+
+            MusicManager.instance.PlayAudioClip(4, 0.1f, 0.5f);
         }
         else
         {
