@@ -23,8 +23,12 @@ public class SelectHatButton : MonoBehaviour
 	public Sprite upButton;
 	public Sprite downButton;
 
-    // Start is called before the first frame update
-    void Start()
+	public List<Sprite> AllSprites;
+	public List<Sprite> AllSpritesUnlocked;
+	public Image theHatImage;
+	public GameObject SelectionOverlay;
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
@@ -35,7 +39,7 @@ public class SelectHatButton : MonoBehaviour
         
     }
 
-	public void Init(RenderTexture targetTex, HatData.HatName targetHat, float fillPercent, Vector2 minMax){
+	public void Init(RenderTexture targetTex, HatData.HatName targetHat, float fillPercent, Vector2 minMax) {
 		isDone = fillPercent >= 1;
 		this.targetHat = targetHat;
 		hatImage = targetTex;
@@ -43,6 +47,13 @@ public class SelectHatButton : MonoBehaviour
 		hatFillAmount.texture = targetTex;
 		hatFillAmount.material = Instantiate(hatFillAmount.material);
 		hatFillAmount.material.SetFloat("_FillAmount", minMax.Evaluate(fillPercent));
+
+		if (isDone)
+			theHatImage.sprite = AllSpritesUnlocked[(int)targetHat];
+		else
+		{
+			theHatImage.sprite = AllSprites[(int)targetHat];
+		}
 	}
 
 	public void SetSelected(HatData.HatName selectedHat){
@@ -71,6 +82,7 @@ public class SelectHatButton : MonoBehaviour
 		downCenter.gameObject.SetActive(true);
 		upCenter.gameObject.SetActive(false);
 		buttonImg.sprite = downButton;
+		SelectionOverlay.SetActive(true);
 	}
 
 	public void SetUpButton(){
@@ -90,6 +102,7 @@ public class SelectHatButton : MonoBehaviour
 		downCenter.gameObject.SetActive(false);
 		upCenter.gameObject.SetActive(true);
 		buttonImg.sprite = upButton;
+		SelectionOverlay.SetActive(false);
 	}
 
 	public void OnClick(){

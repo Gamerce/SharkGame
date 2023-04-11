@@ -43,7 +43,7 @@ public class CheeseEater : MonoBehaviour
 		temp.transform.localScale = Vector3.one;
 		hatFitter = temp.GetComponent<SharkHatFitter>();
 		group.alpha = 1;
-		textAlpha.alpha = 0;
+		//textAlpha.alpha = 0;
 		fadeImg.color = new Color(0,0,0,1);
 		cam.enabled = false;
 		UTween temp2 = UTween.Fade(group, new Vector2(0,1), 0.3f);
@@ -53,6 +53,8 @@ public class CheeseEater : MonoBehaviour
 			canClickIn = 0.2f;	
 		};
 		canClickIn = 9999;
+
+		MusicManager.instance.PlayCheseMusic();
 	}
 
 	// Update is called once per frame
@@ -87,6 +89,7 @@ public class CheeseEater : MonoBehaviour
 									onDone.Invoke();
 								reward.EatCheeseDone();
 								gameObject.SetActive(false);
+								MusicManager.instance.PlayRandomMusic();
 							};
 						});
 						enabled = false;
@@ -96,11 +99,11 @@ public class CheeseEater : MonoBehaviour
 				});
 			}
 		}
-		if(playerDelay > 5){
-			textAlpha.alpha = UICurve.Evaluate((playerDelay-5).Clamp01());
-		}
-		else{
-			textAlpha.alpha = (textAlpha.alpha - Time.deltaTime).Clamp01();
-		}
+		//if(playerDelay > 5){
+		//	textAlpha.alpha = UICurve.Evaluate((playerDelay-5).Clamp01());
+		//}
+		//else{
+		//	textAlpha.alpha = (textAlpha.alpha - Time.deltaTime).Clamp01();
+		//}
     }
 }

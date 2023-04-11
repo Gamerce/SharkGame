@@ -36,8 +36,7 @@ public class LevelManager : MonoBehaviour
     {
         levelText.text = "Level " + aLevel;
         Levels[aLevel].gameObject.SetActive(true);
-        SharkPlayer.instance.transform.position = Levels[aLevel].PlayerPosition;
-        SharkPlayer.instance.transform.rotation = Quaternion.Euler ( Levels[aLevel].PlayerRotation);
+
         SharkPlayer.instance.wpPath.Clear();
         SharkPlayer.instance.wpPath = Levels[aLevel].wpPath;
 
@@ -45,10 +44,22 @@ public class LevelManager : MonoBehaviour
         {
             SharkPlayer.instance.transform.position = Levels[aLevel].PlayerStartTransform.position;
             SharkPlayer.instance.transform.rotation = Levels[aLevel].PlayerStartTransform.rotation;
+
+        }
+        else
+        {
+            SharkPlayer.instance.transform.position = Levels[aLevel].PlayerPosition;
+            SharkPlayer.instance.transform.rotation = Quaternion.Euler(Levels[aLevel].PlayerRotation);
         }
 
+        for(int i = 0; i < Levels.Count;i++)
+        {
+            Levels[i].myWorld.SetActive(false);
+        }
 
-        if(CurrentLevel == 2)
+        Levels[aLevel].myWorld.SetActive(true);
+
+        if (CurrentLevel == 1)
         {
             TrainGO.GetComponent<Animator>().Play("trainIdle");
         }
@@ -56,7 +67,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator EndAfterTime(float time)
     {
 
-        if (CurrentLevel == 2)
+        if (CurrentLevel == 1)
         {
             yield return new WaitForSeconds(0.2f);
             TrainGO.GetComponent<Animator>().Play("trainHit");

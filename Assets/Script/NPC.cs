@@ -21,9 +21,19 @@ public class NPC : MonoBehaviour
     public bool isBoss = false;
 
     public List<GameObject> ArmourParts = new List<GameObject>();
+
+
+    public List<GameObject> RandomBodies = new List<GameObject>();
+    public List<GameObject> RandomFaces = new List<GameObject>();
+    public List<GameObject> RandomItems = new List<GameObject>();
+
+    public GameObject FireEffect;
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         allRG = transform.GetComponentsInChildren<Rigidbody>();
         for (int i = 0; i < allRG.Length; i++)
         {
@@ -35,7 +45,37 @@ public class NPC : MonoBehaviour
             allColiders[i].isTrigger = true;
         }
 
-        GetComponent<Animator>().CrossFade("landing", 0.01f);
+        GetComponent<Animator>().Play("landing");
+
+        if(RandomBodies != null && RandomBodies.Count>0)
+        {
+            for (int i = 0; i < RandomBodies.Count; i++)
+            {
+                RandomBodies[i].SetActive(false);
+            }
+            RandomBodies[Random.Range(0, RandomBodies.Count - 1)].SetActive(true);
+        }
+
+        if (RandomBodies != null && RandomBodies.Count > 0)
+        {
+            for (int i = 0; i < RandomFaces.Count; i++)
+            {
+                RandomFaces[i].SetActive(false);
+            }
+            RandomFaces[Random.Range(0, RandomFaces.Count - 1)].SetActive(true);
+
+        }
+        if (RandomBodies != null && RandomBodies.Count > 0)
+        {
+            for (int i = 0; i < RandomItems.Count; i++)
+            {
+                RandomItems[i].SetActive(false);
+            }
+            RandomItems[Random.Range(0, RandomItems.Count - 1)].SetActive(true);
+
+        }
+
+      
 
 
     }
@@ -139,20 +179,27 @@ public class NPC : MonoBehaviour
     
             }
 
-
-            if(allRG[0].transform.position.y >6&& hasTriggeredEat == false && isBoss == false)
+            if( _npcspawner.isRunning)
             {
-                GameHandler.instance.SharkHeadEat.transform.position = new Vector3(allRG[0].transform.position.x,GameHandler.instance.SharkHeadEat.transform.position.y, allRG[0].transform.position.z);
+                
+                    if (allRG[0].transform.position.y > 6 && hasTriggeredEat == false && isBoss == false)
+                    {
+                        if (Random.Range(0, 100) < 25)
+                        {
+                            GameHandler.instance.SharkHeadEat.transform.position = new Vector3(allRG[0].transform.position.x, GameHandler.instance.SharkHeadEat.transform.position.y, allRG[0].transform.position.z);
 
 
-                GameHandler.instance.SharkHeadEat.SetActive(false);
-                GameHandler.instance.SharkHeadEat.SetActive(true);
-                GameHandler.instance.SharkHeadEat.transform.GetChild(0).GetComponent<Animator>().Play("SharkEatBodyAnimation");
-                GameHandler.instance.SharkHeadEat.GetComponent<EatPeopleHeadFollow>().SetFollow(allRG[0].transform, this);
-                //GameHandler.instance.SharkHeadEat.transform.position += Camera.main.transform.forward * 1.5f;
+                            GameHandler.instance.SharkHeadEat.SetActive(false);
+                            GameHandler.instance.SharkHeadEat.SetActive(true);
+                            GameHandler.instance.SharkHeadEat.transform.GetChild(0).GetComponent<Animator>().Play("SharkEatBodyAnimation");
+                            GameHandler.instance.SharkHeadEat.GetComponent<EatPeopleHeadFollow>().SetFollow(allRG[0].transform, this);
+                            //GameHandler.instance.SharkHeadEat.transform.position += Camera.main.transform.forward * 1.5f;
+                        }
+                        hasTriggeredEat = true;
 
-                hasTriggeredEat = true;
+                    }
             }
+ 
 
             return;
         }
@@ -251,7 +298,21 @@ public class NPC : MonoBehaviour
             GameHandler.instance._LevelManager.GameFinished();
             GameHandler.instance.GameHasEnded = true;
         }
-      
+        else
+        {
+
+                if (Random.Range(0, 100) < 50)
+                {
+                    MusicManager.instance.PlayAudioClip(1, 0.3f, 0.2f);
+                }
+                else
+                    MusicManager.instance.PlayAudioClip(2, 0.3f, 0.2f);
+            
+        }
+        
+   
+   
+
         force = new Vector3(dir.x* power, dir.y* power, dir.z* power)+ adjustment;
         
 
@@ -307,7 +368,7 @@ public class NPC : MonoBehaviour
                 go.transform.position = contact.point;
                 go.SetActive(true);
 
-
+        MusicManager.instance.PlayAudioClip(3, 0, 0.5f);
     }
 
     public void LandEffect(Collision collision)

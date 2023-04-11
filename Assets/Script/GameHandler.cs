@@ -24,7 +24,10 @@ public class GameHandler : MonoBehaviour
     public GameObject BossPrefab;
     public GameObject hitEffect;
 
-    public TMPro.TMP_Text ScoreText;
+    public CanvasGroup tutorialHand;
+    public float touchTimer = 0;
+
+    public UnityEngine.UI.Text ScoreText;
     public GameObject ScoreCan;
 
     public GameObject sharkScoreObj;
@@ -69,6 +72,25 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(touchTimer>2)
+        {
+            tutorialHand.alpha = Mathf.Lerp(tutorialHand.alpha, 1, Time.deltaTime * 3);
+        }
+        if (Input.GetMouseButton(0))
+        {
+            touchTimer = 0;
+            tutorialHand.alpha = 0;
+        }
+        else
+            touchTimer += Time.deltaTime;
+
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            GameHandler.instance._rewardBase.Init(10, null, true);
+        }
+
         if(isSlowmotion<=0)
         {
             Time.timeScale = 1f;

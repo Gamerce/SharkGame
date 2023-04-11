@@ -24,7 +24,7 @@ public class SpriteAnim : MonoBehaviour
         tempMat = Instantiate(target.material);
 		target.material = tempMat;
 		atTime = randomTime.GetRandom();
-		Debug.LogError("Spawned Mat:" + tempMat.name.ToString(), gameObject);
+		//Debug.LogError("Spawned Mat:" + tempMat.name.ToString(), gameObject);
     }
 
 	private void Reset() {

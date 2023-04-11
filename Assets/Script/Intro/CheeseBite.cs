@@ -67,6 +67,9 @@ public class CheeseBite : MonoBehaviour
 	}
 
 	public void TakeBite(GameObject target, bool useLastBite = false){
+
+		MusicManager.instance.PlayAudioClip(0, 0.0f);
+
 		UTween hideObj = UTween.Wait(gameObject, 0.05f, ()=>{
 			target.SetActive(false);
 		});

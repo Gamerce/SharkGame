@@ -19,9 +19,11 @@ public class SharkPlayer : MonoBehaviour
     }
 
     float _addTimer = 0;
+    float startupTimer = 0;
     // Update is called once per frame
     void Update()
     {
+        startupTimer += Time.deltaTime;
         _addTimer += Time.deltaTime;
         if (_addTimer>0.05f)
         {

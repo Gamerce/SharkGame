@@ -40,7 +40,11 @@ public class OnCollisionObject : MonoBehaviour
         //}
         //}
 
-
+        if (_npc.animator.GetCurrentAnimatorStateInfo(0).IsName("landing"))
+        {
+            if( _npc.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <0.7f)
+                return;
+        }
 
         if (_npc.isRagdool == false)
         {
@@ -150,8 +154,17 @@ public class OnCollisionObject : MonoBehaviour
                 go.SetActive(true);
                 _npc.FollowObject(collision.gameObject);
             }
+            if (collision.gameObject.name == "FIRE" && _npc.isBoss)
+            {
 
-                
+
+                _npc.FireEffect.SetActive(true);
+            }
+
+            
+
+
+
 
         }
     }

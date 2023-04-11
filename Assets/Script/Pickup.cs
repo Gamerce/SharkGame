@@ -65,6 +65,9 @@ public class Pickup : MonoBehaviour
             go.SetActive(true);
 
             GameHandler.instance.AddScore();
+
+            MusicManager.instance.PlayAudioClip(0, 0.0f, 0.5f);
+
         }
 
     }

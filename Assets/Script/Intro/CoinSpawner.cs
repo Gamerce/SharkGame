@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
@@ -20,8 +21,16 @@ public class CoinSpawner : MonoBehaviour
 	public Vector2 spawnDelay = new Vector2(0.3f, 0.7f);
 	public Vector2 startVelocity = new Vector2(0.5f,1);
 
-    // Start is called before the first frame update
-    void Start()
+	public GameObject HatOb;
+
+
+	public float duration = 0.3f;
+	public int vibrato = 10;
+	public float elaxity = 1f;
+	public Vector3 punshDir = new Vector3(1, 1, 1);
+
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
@@ -38,16 +47,28 @@ public class CoinSpawner : MonoBehaviour
 
 		for(int index = 0; index < trans.Count; index++){
 			trans[index].position += velocitys[index].GetVector3Z() * Time.deltaTime;
-			velocitys[index] = Vector3.Lerp(velocitys[index], Vector3.zero, Time.deltaTime*3);
+			velocitys[index] = Vector3.Lerp(velocitys[index], Vector3.zero, Time.deltaTime*5);
 			velocitys[index] += (toLoc.position.GetVector2Z() - trans[index].position.GetVector2Z()) * pullAmount * Time.deltaTime;
 
-			if((trans[index].position.GetVector2Z() - toLoc.position.GetVector2Z()).magnitude < 5){
+			if((trans[index].position.GetVector2Z() - toLoc.position.GetVector2Z()).magnitude < 75){
 				//AddCoin and fade;
 				rBase.AddACoin();
 				Destroy(trans[index].gameObject);
 				velocitys.RemoveAt(index);
 				trans.RemoveAt(index--);
+
+				if( DOTween.IsTweening(HatOb.transform) == false)
+					HatOb.transform.DOPunchScale(punshDir, duration, vibrato, elaxity);
+
+				
+					
 			}
+		}
+
+		if(Input.GetKeyUp(KeyCode.O))
+        {
+			if (DOTween.IsTweening(HatOb.transform) == false)
+				HatOb.transform.DOPunchScale(punshDir, duration, vibrato, elaxity);
 		}
     }
 
