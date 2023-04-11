@@ -59,6 +59,7 @@ public class GameHandler : MonoBehaviour
     }
     public void Init()
     {
+        Application.targetFrameRate = 60;
         _SharkPlayer.Init();
         _LevelManager.Init();
 

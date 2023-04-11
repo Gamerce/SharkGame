@@ -180,7 +180,16 @@ public class OnCollisionObject : MonoBehaviour
                 collision.transform.GetChild(0).gameObject.SetActive(true);
                 collision.transform.GetChild(0).transform.position = new Vector3(_npc.spine.transform.position.x, collision.transform.GetChild(0).transform.position.y, _npc.spine.transform.position.z);
              }
-            
+            if (collision.gameObject.name == "Poison" && _npc.isBoss)
+            {
+
+                collision.transform.GetChild(0).gameObject.SetActive(true);
+                collision.transform.GetComponent<BoxCollider>().enabled = false;
+
+            }
+
+
+
 
 
 

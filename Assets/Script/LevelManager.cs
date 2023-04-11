@@ -34,22 +34,30 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel(int aLevel)
     {
+        int realLeave = aLevel;
+
+        while(realLeave >= Levels.Count)
+        {
+            realLeave -= Levels.Count;
+        }
+
+
         levelText.text = "Level " + aLevel;
-        Levels[aLevel].gameObject.SetActive(true);
+        Levels[realLeave].gameObject.SetActive(true);
 
         SharkPlayer.instance.wpPath.Clear();
-        SharkPlayer.instance.wpPath = Levels[aLevel].wpPath;
+        SharkPlayer.instance.wpPath = Levels[realLeave].wpPath;
 
-        if(Levels[aLevel].PlayerStartTransform != null)
+        if(Levels[realLeave].PlayerStartTransform != null)
         {
-            SharkPlayer.instance.transform.position = Levels[aLevel].PlayerStartTransform.position;
-            SharkPlayer.instance.transform.rotation = Levels[aLevel].PlayerStartTransform.rotation;
+            SharkPlayer.instance.transform.position = Levels[realLeave].PlayerStartTransform.position;
+            SharkPlayer.instance.transform.rotation = Levels[realLeave].PlayerStartTransform.rotation;
 
         }
         else
         {
-            SharkPlayer.instance.transform.position = Levels[aLevel].PlayerPosition;
-            SharkPlayer.instance.transform.rotation = Quaternion.Euler(Levels[aLevel].PlayerRotation);
+            SharkPlayer.instance.transform.position = Levels[realLeave].PlayerPosition;
+            SharkPlayer.instance.transform.rotation = Quaternion.Euler(Levels[realLeave].PlayerRotation);
         }
 
         for(int i = 0; i < Levels.Count;i++)
@@ -57,17 +65,21 @@ public class LevelManager : MonoBehaviour
             Levels[i].myWorld.SetActive(false);
         }
 
-        Levels[aLevel].myWorld.SetActive(true);
+        Levels[realLeave].myWorld.SetActive(true);
 
-        if (CurrentLevel == 1)
+        if (realLeave == 1)
         {
             TrainGO.GetComponent<Animator>().Play("trainIdle");
         }
     }
     IEnumerator EndAfterTime(float time)
     {
-
-        if (CurrentLevel == 1)
+        int realLeave = CurrentLevel;
+        while (realLeave >= Levels.Count)
+        {
+            realLeave -= Levels.Count;
+        }
+        if (realLeave == 1)
         {
             yield return new WaitForSeconds(0.2f);
             TrainGO.GetComponent<Animator>().Play("trainHit");
