@@ -160,7 +160,26 @@ public class OnCollisionObject : MonoBehaviour
 
                 _npc.FireEffect.SetActive(true);
             }
+            if (collision.gameObject.name == "ShreedCharacter" && _npc.isBoss)
+            {
+                //GameHandler.instance.SetSlowMotion();
 
+                _npc.gameObject.SetActive(false);
+                collision.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            if (collision.gameObject.name == "Water" && _npc.isBoss)
+            {
+                //GameHandler.instance.SetSlowMotion();
+
+                //for (int i = 0; i < _npc.allRG.Length; i++)
+                //{
+
+                //    _npc.allRG[i].isKinematic = true;
+                //}
+                collision.transform.GetComponent<BoxCollider>().enabled = false;
+                collision.transform.GetChild(0).gameObject.SetActive(true);
+                collision.transform.GetChild(0).transform.position = new Vector3(_npc.spine.transform.position.x, collision.transform.GetChild(0).transform.position.y, _npc.spine.transform.position.z);
+             }
             
 
 
