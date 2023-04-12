@@ -54,7 +54,8 @@ public class CheeseEater : MonoBehaviour
 		};
 		canClickIn = 9999;
 
-		MusicManager.instance.PlayCheseMusic();
+		if(MusicManager.instance != null)
+			MusicManager.instance.PlayCheseMusic();
 	}
 
 	// Update is called once per frame
@@ -89,7 +90,8 @@ public class CheeseEater : MonoBehaviour
 									onDone.Invoke();
 								reward.EatCheeseDone();
 								gameObject.SetActive(false);
-								MusicManager.instance.PlayRandomMusic();
+								if(MusicManager.instance != null)
+									MusicManager.instance.PlayRandomMusic();
 							};
 						});
 						enabled = false;

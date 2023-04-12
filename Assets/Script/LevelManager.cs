@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(0.95f);
         GameHandler.instance.WinEffect.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        GameHandler.instance._rewardBase.Init(10, LoadNextScene, true);
+		GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore * 10, LoadNextScene, true);
     }
 
     public void GameFinished()

@@ -78,8 +78,8 @@ public class SelectHat : MonoBehaviour
 	}
 
 	public void SelectThisHat(HatData.HatName target){
-		PlayerPrefs.SetInt("SelectedHat", (int)selectedHat);
 		selectedHat = target;
+		PlayerPrefs.SetInt("SelectedHat", (int)selectedHat);
 		for(int index = 0; index < allButtons.Count; index++){
 			allButtons[index].SetSelected(target);
 		}
@@ -101,5 +101,14 @@ public class SelectHat : MonoBehaviour
 			button.Init(tempTex, targetHat, fillAmount, minMax);
 		}
 		newHat.SetActive(true);
+	}
+
+	public void UnlockRandomHat(){
+		int randID = rBase.UnlockRandom();
+		if(randID.IsInBound(allButtons)){
+			allButtons[randID].SetFillAmount(1);
+
+		}
+		Debug.LogError("Add the video here.");
 	}
 }

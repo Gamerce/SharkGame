@@ -46,6 +46,10 @@ public class HatData : ScriptableObject
 			return atValue >= unlockPointsNeeded;
 		}
 
+		public void Unlock(){
+			atValue = unlockPointsNeeded+1;
+		}
+
 		public float UnlockPercent(){
 			return ((float)atValue / ((float)unlockPointsNeeded));
 		}

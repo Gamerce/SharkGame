@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoinSpawner : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class CoinSpawner : MonoBehaviour
 	public List<Vector2> velocitys = new List<Vector2>();
 	public List<RectTransform> trans = new List<RectTransform>();
 	public List<TMPro.TextMeshProUGUI> countTexts = new List<TMPro.TextMeshProUGUI>();
+	public List<Text> countTextSimple = new List<Text>();
 
 	public float pullAmount = 0.1f;
 	int toSpawn = -1;
@@ -79,6 +81,9 @@ public class CoinSpawner : MonoBehaviour
 	}
 
 	public void SetAmountText(){
+		for(int index = 0; index < countTextSimple.Count; index++){
+			countTextSimple[index].text = (toSpawn > 0 ? "+" + toSpawn.ToString() : "");
+		}
 		for(int index = 0; index < countTexts.Count; index++){
 			countTexts[index].text = (toSpawn > 0 ? "+" + toSpawn.ToString() : "");
 		}
@@ -93,7 +98,8 @@ public class CoinSpawner : MonoBehaviour
 		temp.SetActive(true);
 		trans.Add(temp.transform as RectTransform);
 		trans[trans.Count-1].position = template.transform.position;
-		spawnIn = spawnDelay.GetRandom();
+		float devider = (float)toSpawn.GetLog();
+		spawnIn = spawnDelay.GetRandom()/(devider*devider);
 		//toLoc.anchorMin = new Vector2(0.5f, 0.5f);
 		//toLoc.anchorMax = new Vector2(0.5f, 0.5f);
 		//fromLoc.anchorMin = new Vector2(0.5f, 0.5f);

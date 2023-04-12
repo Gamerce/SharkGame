@@ -43,6 +43,11 @@ public class RewardBase : MonoBehaviour
 	public SelectHat hatSelector;
 	#endregion
 
+	#region AdWheel
+	public GameObject adWheelRoot;
+	public AdWheel adWheel;
+	#endregion
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -57,10 +62,9 @@ public class RewardBase : MonoBehaviour
 		hatSelector.camDisplayRoot.gameObject.SetActive(true);
 		hatSelector.renderCam.gameObject.SetActive(true);
 		gameObject.SetActive(true);
-		for(int index = 0; index < goldGainAmount.Count; index++){
-			goldGainAmount[index].text = rewardAmount.ToString();
-		}
-		goldGainAmounttext.text= rewardAmount.ToString(); ;
+
+		goldGainAmount.SetText(rewardAmount.ToString());
+		goldGainAmounttext.text = rewardAmount.ToString(); ;
 
 		this.onDone = onDone;
 		this.fadeOutWhenDone = fadeOutWhenDone;
@@ -92,42 +96,42 @@ public class RewardBase : MonoBehaviour
 	
 
 			eater.onDone = ()=>{
+				
+				adWheel.Show(rewardAmount, (int amount)=>{
+					enabled = true;
+					goldGainAmount.SetText(amount.ToString());
+					goldGainAmounttext.text = amount.ToString(); ;
 
-				toSetVal.SetValue(allhats.allHats[currentHat].atValue);
-				fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
-				percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
-				percentTextUi.text = percentText[0].text;
 
-				continueButton.gameObject.SetActive(false);
-				continueButton.alpha = 0;
+					groupCanvas.gameObject.SetActive(true);
+					groupCanvas.alpha = 1;
+					displayParent.gameObject.SetActive(true);
 
-				UTween.Wait(gameObject, 0.1f, () =>
-				{
+					PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount", 0) - rewardAmount + amount);
+					toSetVal.SetValue(allhats.allHats[currentHat].atValue);
+					fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
+					percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
+					percentTextUi.text = percentText[0].text;
+
+					continueButton.gameObject.SetActive(false);
+					continueButton.alpha = 0;
+
+					UTween.Wait(gameObject, 0.1f, () =>
+					{
 			
-					UTween.Wait(gameObject, 0.5f, () => {
+						UTween.Wait(gameObject, 0.5f, () => {
 
-						UTween.Fade(continueButton, new Vector2(0, 1), 0.5f);
+							UTween.Fade(continueButton, new Vector2(0, 1), 0.5f);
+						});
+						coinSpawner.StartSpawn(amount);
+
+						StartCoroutine(ExecuteAfterTime(1.3f, amount));
 					});
-					coinSpawner.StartSpawn(rewardAmount);
-
-
-
-					StartCoroutine(ExecuteAfterTime(1.3f, rewardAmount));
-
-
-
-
-
 				});
-
-
-
-
-
-
 			};
 		}
 	}
+
 	IEnumerator ExecuteAfterTime(float time,int rewardAmount)
 	{
 		yield return new WaitForSeconds(time);
@@ -144,8 +148,7 @@ public class RewardBase : MonoBehaviour
 		{
 			Debug.LogError("Hat has been unlocked do fancy stuff.");
 		}
-
-
+		
 
 		fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
 		percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
@@ -162,10 +165,7 @@ public class RewardBase : MonoBehaviour
 	}
 
 	public void EatCheeseDone(){
-		groupCanvas.gameObject.SetActive(true);
-		groupCanvas.alpha = 1;
 		eatCheese.SetActive(false);
-		displayParent.gameObject.SetActive(true);
 		fadeFrom.color = Color.black;
 		UTween.Fade(fadeFrom, new Vector2(1,0), 0.3f);
 	}
@@ -224,6 +224,26 @@ public class RewardBase : MonoBehaviour
 		}
 	}
 
+	public int UnlockRandom(){
+		List<HatData.HatInfo> availables = new List<HatData.HatInfo>();
+		for(int index = 0; index < allhats.allHats.Count; index++){
+			if(!allhats.allHats[index].IsUnlocked()){
+				availables.Add(allhats.allHats[index]);
+			}
+		}
+		if(availables.Count == 1){
+			availables[0].Unlock();
+			return allhats.allHats.GetId(availables[0]);
+		}
+		else if(availables.Count > 1){
+			int randID = Random.Range(0, availables.Count-1);
+			availables[randID].Unlock();
+			return allhats.allHats.GetId(availables[randID]);
+		}
+		Debug.LogError("Show case the randomly unlocked hat.");
+		return -1;
+	}
+
 	#region HatSelector
 	
 	public void ShowHatSelector(System.Action callback){
@@ -231,6 +251,17 @@ public class RewardBase : MonoBehaviour
 	}
 	public void ShowHatSelector(){
 		hatSelector.Init(null);
+	}
+
+	#endregion
+
+	#region AdWheel
+
+	public void AdWheelComplete(int multiplier){
+
+	}
+
+	public void AdWheelSkipped(){
 	}
 
 	#endregion

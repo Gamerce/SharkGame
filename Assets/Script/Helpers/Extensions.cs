@@ -230,6 +230,10 @@ public static class Extensions {
 		return Mathf.Lerp(thisVal.x, thisVal.y, percent);
 	}
 
+	public static float Lerp(this Vector2 thisVal, float percent){
+		return Mathf.Lerp(thisVal.x, thisVal.y, percent);
+	}
+
 	#endregion
 
 
@@ -257,6 +261,28 @@ public static class Extensions {
 
 	#region int
 
+	static public int GetLog(this int value){
+		value = value < 0 ? -value : value;
+		if(value < 10)
+			return 1;
+		else if(value < 100)
+			return 2;
+		else if(value < 1000)
+			return 3;
+		else if(value < 10000)
+			return 4;
+		else if(value < 100000)
+			return 5;
+		else if(value < 1000000)
+			return 6;
+		else if(value < 10000000)
+			return 7;
+		else if(value < 100000000)
+			return 8;
+		else if(value < 1000000000)
+			return 9;
+		return 10;
+	}
 	
 	static public bool IsInBound(this int value, int minInclusive, int maxInclusive)
 	{
@@ -400,9 +426,24 @@ public static class Extensions {
 
 	#endregion
 
+	#region List
 	
+	public static int GetId<TypeVal>(this List<TypeVal> clips, TypeVal addVal)
+	{
+		for(int index = 0; index < clips.Count; index++)
+		{
+			if(addVal.Equals(clips[index]))
+			{
+				return index;
+			}
+		}
+		return -1;
+	}
+
+	#endregion
+
 	#region Camera
-	
+
 	static public Vector3[] GetWorldCorners (this Camera cam, float depth)
 	{
 		Vector3[] tempVals = new Vector3[4];

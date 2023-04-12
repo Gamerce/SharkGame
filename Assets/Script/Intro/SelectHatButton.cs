@@ -27,6 +27,8 @@ public class SelectHatButton : MonoBehaviour
 	public List<Sprite> AllSpritesUnlocked;
 	public Image theHatImage;
 	public GameObject SelectionOverlay;
+
+	Vector2 usedMinMax;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -40,19 +42,30 @@ public class SelectHatButton : MonoBehaviour
     }
 
 	public void Init(RenderTexture targetTex, HatData.HatName targetHat, float fillPercent, Vector2 minMax) {
+		usedMinMax = minMax;
 		isDone = fillPercent >= 1;
 		this.targetHat = targetHat;
 		hatImage = targetTex;
 		hatBackground.texture = targetTex;
 		hatFillAmount.texture = targetTex;
 		hatFillAmount.material = Instantiate(hatFillAmount.material);
-		hatFillAmount.material.SetFloat("_FillAmount", minMax.Evaluate(fillPercent));
+		hatFillAmount.material.SetFloat("_FillAmount", usedMinMax.Evaluate(fillPercent));
 
 		if (isDone)
 			theHatImage.sprite = AllSpritesUnlocked[(int)targetHat];
 		else
 		{
 			theHatImage.sprite = AllSprites[(int)targetHat];
+		}
+	}
+
+	public void SetFillAmount(float fillPercent){
+		hatFillAmount.material.SetFloat("_FillAmount", usedMinMax.Evaluate(fillPercent));
+		isDone = fillPercent >= 1.0f;
+		if(fillPercent >= 0.99f){
+			int targetHat = AllSprites.GetId(theHatImage.sprite);
+			if(targetHat.IsInBound(AllSpritesUnlocked))
+				theHatImage.sprite = AllSpritesUnlocked[targetHat];
 		}
 	}
 

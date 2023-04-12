@@ -21,6 +21,9 @@ public class IntroManager : MonoBehaviour
     {
         sharkAnim.SetLayerWeight(1, 1);
 		sharkAnim.Play("SharkIntroAnim", 1, 0);
+		if(Application.isEditor){
+			Application.targetFrameRate = 30;
+		}
     }
 
     // Update is called once per frame
