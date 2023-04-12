@@ -313,7 +313,15 @@ public class NPC : MonoBehaviour
                 }
                 else
                     MusicManager.instance.PlayAudioClip(2, 0.3f, 0.2f);
-            
+
+
+
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("FastRunPlace"))
+            {
+                GameHandler.instance.PunshText();
+            }
+
         }
         
    
