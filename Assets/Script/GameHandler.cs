@@ -116,8 +116,37 @@ public class GameHandler : MonoBehaviour
         {
             AddScore();
         }
+
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            PunshText();
+        }
+        
+    }
+    public Text ComboAwesomeTextLabel;
+    public void PunshText()
+    {
+        ComboAwesomeTextLabel.enabled = true;
+        iTween.Stop(ComboAwesomeTextLabel.gameObject);
+        int rand = Random.Range(0, 100);
+            if(rand <30)
+            ComboAwesomeTextLabel.text = "Perfect!";
+            else if (rand < 60)
+                ComboAwesomeTextLabel.text = "Awesome!";
+            else if (rand < 100)
+                ComboAwesomeTextLabel.text = "Nice!";
+
+        iTween.PunchScale(ComboAwesomeTextLabel.gameObject, new Vector3(1, 1, 0) * 0.3f, 1.0f);
+
+        StartCoroutine(DisableAfterTime(0.9f));
     }
 
+
+    IEnumerator DisableAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ComboAwesomeTextLabel.enabled = false;
+    }
     public float effectDuration = 0.3f;
     public float shakeStrength = 10f;
     public int shakeVibrato = 20;
