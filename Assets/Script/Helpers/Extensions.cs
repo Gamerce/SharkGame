@@ -402,7 +402,21 @@ public static class Extensions {
 	}
 
 	#endregion
+	
+	#region GameObject
 
+
+	static public void SetLayer(this GameObject thisVal, int layer, bool updateChildren = true){
+		thisVal.layer = layer;
+		if(updateChildren){
+			int count = thisVal.transform.childCount;
+			for(int index = 0; index < count; index++){
+				thisVal.transform.GetChild(index).gameObject.SetLayer(layer, updateChildren);
+			}
+		}
+	}
+
+	#endregion
 	#region List<TMPro.TextMeshPro>
 
 	static public void SetText(this List<TMPro.TextMeshPro> thisVal, string target){

@@ -36,11 +36,13 @@ public class CheeseEater : MonoBehaviour
 
 
 	private void OnEnable() {
+		transform.localPosition = new Vector3(100,0,0);
 		bite.Init();
 		nextTarget = bite.PrepareBite();
 		GameObject temp = Instantiate(sharkPrefab, sharkRoot);
 		temp.transform.localPosition = Vector3.zero;
 		temp.transform.localScale = Vector3.one;
+		temp.SetLayer(bite.gameObject.layer);
 		hatFitter = temp.GetComponent<SharkHatFitter>();
 		group.alpha = 1;
 		//textAlpha.alpha = 0;

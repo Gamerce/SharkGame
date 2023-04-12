@@ -17,6 +17,7 @@ public class CoinSpawner : MonoBehaviour
 	public List<Text> countTextSimple = new List<Text>();
 
 	public float pullAmount = 0.1f;
+	public int spawnSkip = 10;
 	int toSpawn = -1;
 	float spawnIn;
 
@@ -54,7 +55,7 @@ public class CoinSpawner : MonoBehaviour
 
 			if((trans[index].position.GetVector2Z() - toLoc.position.GetVector2Z()).magnitude < 75){
 				//AddCoin and fade;
-				rBase.AddACoin();
+				rBase.AddACoin(spawnSkip);
 				Destroy(trans[index].gameObject);
 				velocitys.RemoveAt(index);
 				trans.RemoveAt(index--);
@@ -90,7 +91,7 @@ public class CoinSpawner : MonoBehaviour
 	}
 
 	public void Spawn(){
-		toSpawn--;
+		toSpawn -= spawnSkip;
 		template.SetActive(toSpawn > 0);
 		SetAmountText();
 		velocitys.Add(new Vector2(Random.Range(-1,1), Random.Range(-1,1)).normalized * startVelocity.GetRandom());
