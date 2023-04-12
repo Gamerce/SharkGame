@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
     {
         CurrentLevel += 1;
         PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
 

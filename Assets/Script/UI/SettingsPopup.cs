@@ -99,7 +99,7 @@ public class SettingsPopup : MonoBehaviour
 
 	public void ResetClicked(){
 		PlayerPrefs.DeleteAll();
-		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+		UnityEngine.SceneManagement.SceneManager.LoadScene(1);
 	}
 
 	public void PrivacyPolicyClicked(){
