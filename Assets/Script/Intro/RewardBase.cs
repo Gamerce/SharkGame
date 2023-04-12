@@ -154,8 +154,8 @@ public class RewardBase : MonoBehaviour
 		percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
 		percentTextUi.text = percentText[0].text;
 	}
-	public void AddACoin(){
-		totalCoinAmount.AddNow(1);
+	public void AddACoin(int coinValue = 1){
+		totalCoinAmount.AddNow(coinValue);
 		canBouncer.AddBounce(1.5f);
 	}
 
