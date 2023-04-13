@@ -211,7 +211,11 @@ public class GameHandler : MonoBehaviour
         CurrentCanScore += amount;
         ScoreText.text = CurrentCanScore.ToString();
 
-        ScoreText.transform.DOShakeScale(d, s, v, r);
+        //ScoreText.transform.DOShakeScale(d, s, v, r);
+		ScoreBounce bouncer = ScoreText.GetComponent<ScoreBounce>();
+		if(bouncer != null){
+			bouncer.AddBounce(amount/10 + 3);
+		}
     }
 
 	public void ForceTimeStop(bool toStop){

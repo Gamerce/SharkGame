@@ -196,6 +196,7 @@ public class NPC : MonoBehaviour
                             GameHandler.instance.SharkHeadEat.SetActive(true);
                             GameHandler.instance.SharkHeadEat.transform.GetChild(0).GetComponent<Animator>().Play("SharkEatBodyAnimation");
                             GameHandler.instance.SharkHeadEat.GetComponent<EatPeopleHeadFollow>().SetFollow(allRG[0].transform, this);
+							GameHandler.instance.AddScore(5);
                             //GameHandler.instance.SharkHeadEat.transform.position += Camera.main.transform.forward * 1.5f;
                         }
                         hasTriggeredEat = true;
