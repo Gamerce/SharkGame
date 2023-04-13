@@ -63,8 +63,6 @@ public class CoinSpawner : MonoBehaviour
 				if( DOTween.IsTweening(HatOb.transform) == false)
 					HatOb.transform.DOPunchScale(punshDir, duration, vibrato, elaxity);
 
-				
-					
 			}
 		}
 

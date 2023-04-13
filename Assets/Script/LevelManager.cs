@@ -88,7 +88,9 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(0.95f);
         GameHandler.instance.WinEffect.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-		GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore * 10, LoadNextScene, true);
+		GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore, LoadNextScene, true);
+		Canvas parentCan = GameHandler.instance.tutorialHand.GetComponentInParent<Canvas>();
+		parentCan.gameObject.SetActive(false);
     }
 
     public void GameFinished()

@@ -15,7 +15,7 @@ public class RewardBase : MonoBehaviour
 	public List<TMPro.TextMeshProUGUI> goldGainAmount = new List<TMPro.TextMeshProUGUI>();
 	public UnityEngine.UI.Text goldGainAmounttext;
 	public List<TMPro.TextMeshProUGUI> goldTotalAmount = new List<TMPro.TextMeshProUGUI>();
-	SmoothFloat toSetVal = new SmoothFloat(0);
+	float fillValue = 0;
 
 	[Range(0,1)]
 	public float debugFillAmount = 0;
@@ -108,9 +108,9 @@ public class RewardBase : MonoBehaviour
 					displayParent.gameObject.SetActive(true);
 
 					PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount", 0) - rewardAmount + amount);
-					toSetVal.SetValue(allhats.allHats[currentHat].atValue);
-					fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
-					percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
+					fillValue = allhats.allHats[currentHat].atValue;
+					fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(fillValue / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
+					percentText.SetText(((fillValue / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
 					percentTextUi.text = percentText[0].text;
 
 					continueButton.gameObject.SetActive(false);
@@ -139,10 +139,9 @@ public class RewardBase : MonoBehaviour
 		continueButton.gameObject.SetActive(true);
 
 		updateText = true;
-		toSetVal.SetValue(allhats.allHats[currentHat].atValue);
+		fillValue = allhats.allHats[currentHat].atValue;
 		allhats.allHats[currentHat].atValue = allhats.allHats[currentHat].atValue + rewardAmount;
-		toSetVal.value = allhats.allHats[currentHat].atValue;
-		toSetVal.smoothSpeed = 50.0f;//100.0f;
+		//fillValue = allhats.allHats[currentHat].atValue;
 
 		if (allhats.allHats[currentHat].IsUnlocked())
 		{
@@ -150,13 +149,14 @@ public class RewardBase : MonoBehaviour
 		}
 		
 
-		fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
-		percentText.SetText(((toSetVal.value / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
+		fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(fillValue / (float)(allhats.allHats[currentHat].unlockPointsNeeded)));
+		percentText.SetText(((fillValue / (float)(allhats.allHats[currentHat].unlockPointsNeeded)) * 100).ToString("0") + "%");
 		percentTextUi.text = percentText[0].text;
 	}
 	public void AddACoin(int coinValue = 1){
 		totalCoinAmount.AddNow(coinValue);
 		canBouncer.AddBounce(1.5f);
+		fillValue += coinValue;
 	}
 
 	[ContextMenu("Reset Curve")]
@@ -180,17 +180,16 @@ public class RewardBase : MonoBehaviour
 	void Update()
     {
 		if(updateText){
-			toSetVal.Update(Time.deltaTime);
-			percentText[0].transform.localScale = Vector3.one * (1+pulseVelocity * pulseCurve.Evaluate(toSetVal.GetPercentage()));
-			percentTextUi.transform.localScale = Vector3.one * (1 + pulseVelocity * pulseCurve.Evaluate(toSetVal.GetPercentage()));
-			float percent = (toSetVal.value/(float)(allhats.allHats[currentHat].unlockPointsNeeded));
+			float percent = (fillValue/(float)(allhats.allHats[currentHat].unlockPointsNeeded));
 			percent = percent.Clamp01();
+			percentText[0].transform.localScale = Vector3.one * (1+pulseVelocity * pulseCurve.Evaluate(percent));
+			percentTextUi.transform.localScale = Vector3.one * (1 + pulseVelocity * pulseCurve.Evaluate(percent));
 			percentText.SetText((percent*100).ToString("0") + "%");
 			percentTextUi.text = percentText[0].text;
 			fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(percent));
-			if(toSetVal.IsDone()){
-				updateText = false;
-			}
+			//if(toSetVal.IsDone()){
+			//	updateText = false;
+			//}
 		}
 		if(debugFill){
 			fillMat.SetFloat("_FillAmount", minMaxVal.Evaluate(debugFillAmount));

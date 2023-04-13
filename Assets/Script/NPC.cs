@@ -295,6 +295,7 @@ public class NPC : MonoBehaviour
 
         if(isBoss)
         {
+			GameHandler.instance.AddScore((int)Random.Range(30,50));
              power = 250;
              dir = transform.position - avgPos;
              adjustment = (SharkPlayer.instance.transform.forward + new Vector3(0, 1.5f, 0)) * power * 2;

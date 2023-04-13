@@ -78,6 +78,8 @@ public class MusicManager : MonoBehaviour
 
 	public void SetMusicOnOff(bool isOn){
 		isMusicOn = isOn;
+        Music2.volume = isMusicOn ? MAX_VOLUME : 0;
+        Music1.volume = (isMusicOn && !Music2.isPlaying) ? MAX_VOLUME : 0;
 		PlayerPrefs.SetInt("MusicOn", isMusicOn ? 1 : 0);
 	}
 

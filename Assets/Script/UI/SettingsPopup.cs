@@ -52,11 +52,16 @@ public class SettingsPopup : MonoBehaviour
     {
         
     }
-
+	
 	private void OnEnable() {
-		UTween.Fade(bgFader, new Vector2(0,0.65f), 0.3f);
+		UTween temp = UTween.Fade(bgFader, new Vector2(0,0.65f), 0.3f);
+		temp.useScaledTime = false;
 		popup.anchoredPosition = hidePos;
-		UTween.MoveTo(popup, showPos, 0.3f);
+		temp = UTween.MoveTo(popup, showPos, 0.3f);
+		temp.useScaledTime = false;
+		if(GameHandler.instance != null){
+			GameHandler.instance.ForceTimeStop(true);
+		}
 	}
 
 	void InitButton(SettingsType target, bool isUp){
@@ -110,12 +115,18 @@ public class SettingsPopup : MonoBehaviour
 		if(blockClose)
 			return;
 		blockClose = true;
-		UTween.Fade(bgFader, new Vector2(0.65f,0), 0.3f);
-		UTween temp = UTween.MoveTo(popup, hidePos, 0.3f);
+
+		UTween temp = UTween.Fade(bgFader, new Vector2(0.65f,0), 0.3f);
+		temp.useScaledTime = false;
+		temp = UTween.MoveTo(popup, hidePos, 0.3f);
+		temp.useScaledTime = false;
 		temp.onDone += ()=>{
 			gameObject.SetActive(false);
 			blockClose = false;
 		};
+		if(GameHandler.instance != null){
+			GameHandler.instance.ForceTimeStop(false);
+		}
 	}
 
 	[ContextMenu("Save Current To Show")]
