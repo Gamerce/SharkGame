@@ -187,7 +187,14 @@ public class OnCollisionObject : MonoBehaviour
                 collision.transform.GetComponent<BoxCollider>().enabled = false;
 
             }
+            if (collision.gameObject.name == "PopBallopns" && _npc.isBoss)
+            {
 
+                collision.transform.GetChild(0).gameObject.SetActive(true);
+                collision.transform.GetComponent<BoxCollider>().enabled = false;
+                collision.transform.GetChild(1).gameObject.SetActive(false);
+
+            }
 
 
 
