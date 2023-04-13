@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scene/Intro.unity
+    guid: 3e37b5935efb3404c8c1750734c1132a
+  - enabled: 1
     path: Assets/CompleteTownMovemntTest.unity
     guid: 816d7bcd1bdfc4ab69281e22f660dd87
   m_configObjects: {}
