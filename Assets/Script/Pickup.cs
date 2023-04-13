@@ -18,8 +18,12 @@ public class Pickup : MonoBehaviour
         _MeshRenderer.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+	private void OnEnable() {
+		gameObject.SetLayer(LayerMask.NameToLayer("Cans"));
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         transform.Rotate(new Vector3(0,1,0),Time.deltaTime*speed,Space.World);
         //collisionTimer += Time.deltaTime;
