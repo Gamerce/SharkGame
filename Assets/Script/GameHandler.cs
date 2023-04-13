@@ -49,6 +49,7 @@ public class GameHandler : MonoBehaviour
     public GameObject SharkHeadEat;
 
     public int CurrentCanScore = 0;
+	bool forceTimeStop = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +74,8 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		if(GameHandler.instance._rewardBase.gameObject.activeSelf)
+			touchTimer = 0;
         if(touchTimer>2)
         {
             tutorialHand.alpha = Mathf.Lerp(tutorialHand.alpha, 1, Time.deltaTime * 3);
@@ -92,15 +94,19 @@ public class GameHandler : MonoBehaviour
             GameHandler.instance._rewardBase.Init(10, null, true);
         }
 
-        if(isSlowmotion<=0)
-        {
-            Time.timeScale = 1f;
-        }else
-        {
-            Time.timeScale = 0.02f;
-            isSlowmotion -= Time.unscaledDeltaTime;
-        }
-
+		if(forceTimeStop){
+			Time.timeScale = 0;
+		}
+		else{
+			if(isSlowmotion<=0)
+			{
+				Time.timeScale = 1f;
+			}else
+			{
+				Time.timeScale = 0.02f;
+				isSlowmotion -= Time.unscaledDeltaTime;
+			}
+		}
         //spawnTimer -= Time.deltaTime;
         //if(spawnTimer<0)
         //{
@@ -135,7 +141,7 @@ public class GameHandler : MonoBehaviour
                 ComboAwesomeTextLabel.text = "Awesome!";
             else if (rand < 100)
                 ComboAwesomeTextLabel.text = "Nice!";
-
+		AddScore(1);
         iTween.PunchScale(ComboAwesomeTextLabel.gameObject, new Vector3(1, 1, 0) * 0.3f, 1.0f);
 
         StartCoroutine(DisableAfterTime(0.9f));
@@ -171,10 +177,8 @@ public class GameHandler : MonoBehaviour
     {
 
         StartCoroutine(GiveScoreAfterTime(aTime));
-
-
-
     }
+
     IEnumerator GiveScoreAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
@@ -201,12 +205,16 @@ public class GameHandler : MonoBehaviour
     public float s;
     public int v;
     public float r;
-    public void AddScore()
+    public void AddScore(int amount = 10)
     {
 
-        CurrentCanScore += 1;
+        CurrentCanScore += amount;
         ScoreText.text = CurrentCanScore.ToString();
 
         ScoreText.transform.DOShakeScale(d, s, v, r);
     }
+
+	public void ForceTimeStop(bool toStop){
+		forceTimeStop = toStop;
+	}
 }
