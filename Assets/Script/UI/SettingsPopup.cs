@@ -44,7 +44,7 @@ public class SettingsPopup : MonoBehaviour
     {
 		InitButton(SettingsType.Sound, PlayerPrefs.GetInt("SoundOn", 1) == 1);
 		InitButton(SettingsType.Music, PlayerPrefs.GetInt("MusicOn", 1) == 1);
-		InitButton(SettingsType.Vibrate, PlayerPrefs.GetInt("VibrateOn", 1) == 1);
+		InitButton(SettingsType.Vibrate, PlayerPrefs.GetInt("VibrateOn", 0) == 1);
     }
 
     // Update is called once per frame
@@ -100,6 +100,9 @@ public class SettingsPopup : MonoBehaviour
 	public void VibrateClicked(){
 		bool isUp = ToggleButton(SettingsType.Vibrate);
 		PlayerPrefs.SetInt("VibrateOn", (isUp ? 1 : 0));
+		if(GameHandler.instance != null && GameHandler.instance.viber != null){
+			GameHandler.instance.viber.SetActive(isUp);
+		}
 	}
 
 	public void ResetClicked(){

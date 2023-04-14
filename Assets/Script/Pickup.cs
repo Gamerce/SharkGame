@@ -12,7 +12,12 @@ public class Pickup : MonoBehaviour
     public ProceduralMeshExploder.MeshExploder _meshExploder;
     // Start is called before the first frame update
     MeshRenderer _MeshRenderer;
-    void Start()
+
+	private void Awake() {
+		gameObject.SetLayer(LayerMask.NameToLayer("Cans"));
+	}
+
+	void Start()
     {
         _MeshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         _MeshRenderer.gameObject.SetActive(false);
@@ -69,6 +74,7 @@ public class Pickup : MonoBehaviour
             go.SetActive(true);
 
             GameHandler.instance.AddScore();
+			GameHandler.instance.AddForce(0.3f, 0.5f);
 
             MusicManager.instance.PlayAudioClip(0, 0.0f, 0.5f);
 

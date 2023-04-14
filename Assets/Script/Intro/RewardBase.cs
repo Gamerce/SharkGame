@@ -157,6 +157,9 @@ public class RewardBase : MonoBehaviour
 		totalCoinAmount.AddNow(coinValue);
 		canBouncer.AddBounce(1.5f);
 		fillValue += coinValue;
+		if(GameHandler.instance != null){
+			GameHandler.instance.AddForce(0.1f, 0.3f);
+		}
 	}
 
 	[ContextMenu("Reset Curve")]

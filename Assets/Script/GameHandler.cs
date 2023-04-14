@@ -51,10 +51,13 @@ public class GameHandler : MonoBehaviour
     public int CurrentCanScore = 0;
 	bool forceTimeStop = false;
 
+	public VibeMaster viber;
     // Start is called before the first frame update
     void Start()
     {
         Init();
+		if(viber == null)
+			viber = gameObject.AddComponent<VibeMaster>();
 
 
     }
@@ -220,5 +223,10 @@ public class GameHandler : MonoBehaviour
 
 	public void ForceTimeStop(bool toStop){
 		forceTimeStop = toStop;
+	}
+
+	public void AddForce(float force, float duration){
+		if(viber != null)
+			viber.AddVibe(force, duration);
 	}
 }

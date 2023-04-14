@@ -78,6 +78,9 @@ public class CheeseEater : MonoBehaviour
 					hatFitter.transform.localPosition = Vector3.zero;
 					hatFitter.TriggerBite();
 				}
+				if(GameHandler.instance != null){
+					GameHandler.instance.AddForce(0.5f, 0.3f);
+				}
 				
 				UTween.Clear(sharkRoot);
 				UTween temp = UTween.MoveTo(sharkRoot, bite.transform.position, biteDuration, true);

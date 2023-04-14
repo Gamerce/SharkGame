@@ -196,7 +196,10 @@ public class NPC : MonoBehaviour
                             GameHandler.instance.SharkHeadEat.SetActive(true);
                             GameHandler.instance.SharkHeadEat.transform.GetChild(0).GetComponent<Animator>().Play("SharkEatBodyAnimation");
                             GameHandler.instance.SharkHeadEat.GetComponent<EatPeopleHeadFollow>().SetFollow(allRG[0].transform, this);
-							GameHandler.instance.AddScore(5);
+							UTween.Wait(gameObject, 0.5f, ()=>{
+								if(GameHandler.instance != null)
+									GameHandler.instance.AddScore(5);
+							});
                             //GameHandler.instance.SharkHeadEat.transform.position += Camera.main.transform.forward * 1.5f;
                         }
                         hasTriggeredEat = true;
@@ -296,6 +299,7 @@ public class NPC : MonoBehaviour
 
         if(isBoss)
         {
+			GameHandler.instance.AddForce(1,0.5f);
 			GameHandler.instance.AddScore((int)Random.Range(30,50));
              power = 250;
              dir = transform.position - avgPos;
@@ -308,15 +312,14 @@ public class NPC : MonoBehaviour
         }
         else
         {
+			GameHandler.instance.AddForce(0.75f,0.5f);
 
-                if (Random.Range(0, 100) < 50)
-                {
-                    MusicManager.instance.PlayAudioClip(1, 0.3f, 0.2f);
-                }
-                else
-                    MusicManager.instance.PlayAudioClip(2, 0.3f, 0.2f);
-
-
+            if (Random.Range(0, 100) < 50)
+            {
+                MusicManager.instance.PlayAudioClip(1, 0.3f, 0.2f);
+            }
+            else
+                MusicManager.instance.PlayAudioClip(2, 0.3f, 0.2f);
 
 
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("FastRunPlace"))
@@ -342,9 +345,8 @@ public class NPC : MonoBehaviour
         isRagdool = true;
         hitBox.SetActive(false);
 
-
-
     }
+
     public void ExplodeObject(GameObject go)
     {
         go.AddComponent<Rigidbody>();
