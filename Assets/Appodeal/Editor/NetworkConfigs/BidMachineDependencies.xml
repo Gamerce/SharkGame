@@ -4,7 +4,6 @@
         <iosPod name="APDBidMachineAdapter" version="3.0.2.1" minTargetSdk="11.0" />
         <iosPod name="BidMachineAmazonAdapter" version="~> 2.0.0.0" minTargetSdk="11.0" />
         <iosPod name="BidMachineCriteoAdapter" version="~> 2.0.0.0" minTargetSdk="11.0" />
-        <iosPod name="BidMachineNotsyAdapter" version="~> 2.0.0.0" minTargetSdk="11.0" />
         <iosPod name="BidMachinePangleAdapter" version="~> 2.0.0.0" minTargetSdk="11.0" />
         <iosPod name="BidMachineSmaatoAdapter" version="~> 2.0.0" minTargetSdk="11.0" />
         <iosPod name="BidMachineTapjoyAdapter" version="~> 2.0.0.0" minTargetSdk="11.0" />

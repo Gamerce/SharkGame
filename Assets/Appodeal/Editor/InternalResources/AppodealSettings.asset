@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9403d56c027e8442284a59449c4f1002, type: 3}
   m_Name: AppodealSettings
   m_EditorClassIdentifier: 
-  adMobAndroidAppId: ca-app-pub-
-  adMobIosAppId: ca-app-pub-
+  adMobAndroidAppId: 
+  adMobIosAppId: 
   accessCoarseLocationPermission: 0
   writeExternalStoragePermission: 0
   accessWifiStatePermission: 0
-  vibratePermission: 1
+  vibratePermission: 0
   accessFineLocationPermission: 0
   androidMultidex: 0
-  nSUserTrackingUsageDescription: 0
-  nSLocationWhenInUseUsageDescription: 0
-  nSCalendarsUsageDescription: 0
-  nSAppTransportSecurity: 0
+  nSUserTrackingUsageDescription: 1
+  nSLocationWhenInUseUsageDescription: 1
+  nSCalendarsUsageDescription: 1
+  nSAppTransportSecurity: 1
   iOSSKAdNetworkItems: 1
   iOsskAdNetworkItemsList:
   - v9wttpbfk9.skadnetwork
