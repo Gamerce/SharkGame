@@ -28,6 +28,8 @@ public class SharkArmFollowObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameHandler.instance.GameOverScreen.activeSelf)
+            return;
         transform.position = Vector3.Lerp(transform.position, followTarget.transform.position, Time.deltaTime * Speed);
         transform.forward = Vector3.Lerp(transform.forward, -targetRotation.transform.forward, Time.deltaTime * Speed2);
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ImpulseVibrations;
+
 
 public class VibeMaster : MonoBehaviour
 {
@@ -40,6 +42,7 @@ public class VibeMaster : MonoBehaviour
 		if(currentVibe != lastVibe){
 			lastVibe = currentVibe;
 			Handheld.Vibrate();//lastVibe
+			Debug.Log("Vibrate!");
 		}
     }
 
@@ -49,12 +52,16 @@ public class VibeMaster : MonoBehaviour
 
 	public void AddVibe(float force, float duration, AnimationCurve specialCurve = null){
 		Vibe temp = new Vibe();
-		temp.force = force;
-		temp.duration = duration;
+		temp.force = force/3;
+		temp.duration = duration/3;
 		temp.atTime = 0;
 		temp.uniqueCurve = specialCurve;
 		vibes.Add(temp);
 	}
+
+
+
+
 
 	void UpdateVibe(){
 		for(int index = 0; index < vibes.Count; index++){

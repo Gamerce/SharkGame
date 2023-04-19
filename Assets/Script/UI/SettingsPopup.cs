@@ -112,6 +112,7 @@ public class SettingsPopup : MonoBehaviour
 
 	public void PrivacyPolicyClicked(){
 		Debug.LogError("Show privacy policy here or link to it.");
+		Application.OpenURL("https://www.influencerapps.io/privacypolicy");
 	}
 
 	public void CloseClicked(){

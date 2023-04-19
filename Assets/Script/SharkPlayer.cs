@@ -23,6 +23,9 @@ public class SharkPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameHandler.instance.GameOverScreen.activeSelf)
+            return;
+
         startupTimer += Time.deltaTime;
         _addTimer += Time.deltaTime;
         if (_addTimer>0.05f)

@@ -35,6 +35,9 @@ public class SharkArm : MonoBehaviour
         // Update is called once per frame
     void Update()
     {
+        if (GameHandler.instance.GameOverScreen.activeSelf)
+            return;
+
         Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Vector2 mouseDelta = mousePos - mouseLastFrame;
         mouseLastFrame = mousePos;

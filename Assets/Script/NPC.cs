@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
@@ -29,6 +30,11 @@ public class NPC : MonoBehaviour
 
     public GameObject FireEffect;
     public Animator animator;
+
+    public Image attackTimer;
+    public Canvas mainCanvas;
+
+    public float AttackTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -78,8 +84,8 @@ public class NPC : MonoBehaviour
 
         }
 
-      
-
+        if (attackTimer != null)
+            attackTimer.fillAmount = 0;
 
     }
     public float _hitDelay = 0;
@@ -87,6 +93,8 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameHandler.instance.GameOverScreen.activeSelf)
+            return;
 
         if(obToFollow != null)
         {
@@ -161,6 +169,38 @@ public class NPC : MonoBehaviour
                 if (!isBoss)
                 UpdateStepBackLogic();
 
+
+                if(isBoss == false)
+                {
+
+                    if (AttackTime > 1.51f)
+                    {
+                        GameHandler.instance.GameOverScreen.SetActive(true);
+                    }
+
+
+                    RectTransform CanvasRect = mainCanvas.GetComponent<RectTransform>();
+                    //then you calculate the position of the UI element
+                    //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this, you need to subtract the height / width of the canvas * 0.5 to get the correct position.
+
+                    Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(spine.transform.position + new Vector3(0, 0.75f, 0));
+                    Vector2 WorldObject_ScreenPosition = new Vector2(
+                    ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+                    ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+
+
+                    //now you can set the position of the ui element
+                    attackTimer.rectTransform.anchoredPosition = WorldObject_ScreenPosition;
+
+
+
+
+                    attackTimer.fillAmount = AttackTime / 1.5f;
+
+                    AttackTime += Time.deltaTime;
+
+                
+                }
 
 
             }
@@ -344,7 +384,8 @@ public class NPC : MonoBehaviour
         }
         isRagdool = true;
         hitBox.SetActive(false);
-
+        if (attackTimer != null)
+            attackTimer.fillAmount = 0;
     }
 
     public void ExplodeObject(GameObject go)
@@ -373,6 +414,8 @@ public class NPC : MonoBehaviour
 
         go.GetComponent<Rigidbody>().isKinematic = false;
         go.GetComponent<Rigidbody>().AddForceAtPosition(force, transform.position);
+        if(attackTimer != null)
+        attackTimer.fillAmount = 0;
     }
     bool hasTriggeredEffect = false;
     public void HitEffect(Collision collision)
@@ -396,7 +439,7 @@ public class NPC : MonoBehaviour
         Vector3 position = contact.point;
        // if (hasTriggeredEffect == false)
         {
-            Debug.Log(collision.gameObject.name);
+            //Debug.Log(collision.gameObject.name);
             if (collision.gameObject.name != "SharkTop" && collision.gameObject.name != "SharkBody" && collision.gameObject.name != "HitBox")
             {
                 GameObject go = GameObject.Instantiate(collisionEffect);

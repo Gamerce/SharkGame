@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using ImpulseVibrations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,6 +62,9 @@ public class GameHandler : MonoBehaviour
 			viber = gameObject.AddComponent<VibeMaster>();
 
 
+        //Screen.SetResolution(Screen.width / 4*3, Screen.height / 4 *3, true);
+        
+
     }
     public void Init()
     {
@@ -77,7 +82,10 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(GameHandler.instance._rewardBase.gameObject.activeSelf)
+        if (GameHandler.instance.GameOverScreen.activeSelf)
+            return;
+
+        if (GameHandler.instance._rewardBase.gameObject.activeSelf)
 			touchTimer = 0;
         if(touchTimer>2)
         {
@@ -137,7 +145,7 @@ public class GameHandler : MonoBehaviour
     {
         ComboAwesomeTextLabel.enabled = true;
         iTween.Stop(ComboAwesomeTextLabel.gameObject);
-        int rand = Random.Range(0, 100);
+        int rand = UnityEngine.Random.Range(0, 100);
             if(rand <30)
             ComboAwesomeTextLabel.text = "Perfect!";
             else if (rand < 60)
@@ -226,7 +234,33 @@ public class GameHandler : MonoBehaviour
 	}
 
 	public void AddForce(float force, float duration){
-		if(viber != null)
-			viber.AddVibe(force, duration);
-	}
+        //if(viber != null)
+        //	viber.AddVibe(force, duration);
+#if UNITY_IPHONE
+        if (force>0.6)
+            Vibrator.iOSVibrate(ImpactTypeFeedback.IMPACT_HEAVY);
+        else if (force > 0.3f)
+            Vibrator.iOSVibrate(ImpactTypeFeedback.IMPACT_MEDIUM);
+        else if (force >= 0.0)
+            Vibrator.iOSVibrate(ImpactTypeFeedback.IMPACT_MEDIUM);
+#endif
+
+#if UNITY_ANDROID
+        Vibrator.AndroidVibrate(HapticFeedbackConstants.CONFIRM);
+        //Vibrator.AndroidVibrate(Convert.ToInt64(duration/2), Convert.ToInt32(force));
+#endif
+
+
+
+
+
+
+    }
+    public GameObject GameOverScreen;
+    public void PressRetry()
+    {
+        _LevelManager.ResetLevel();
+
+    }
+
 }

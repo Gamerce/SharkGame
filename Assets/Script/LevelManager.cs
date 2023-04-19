@@ -106,6 +106,10 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
         SceneManager.LoadScene(1);
     }
-
+    public void ResetLevel()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+        SceneManager.LoadScene(1);
+    }
 
 }
