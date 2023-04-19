@@ -18,7 +18,7 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	AdInfo interstitialAd = new AdInfo();
 	AdInfo rewardVideoAd = new AdInfo();
 
-	static AdMaster ourInstance;
+	static AdMaster ourInstance=null;
 	public static AdMaster instance { // This is a property.
 		get {
 			if(ourInstance == null){
@@ -42,13 +42,15 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 		string appKey = "YOUR_APPODEAL_APP_KEY";
 		#if UNITY_ANDROID//ca-app-pub-
 			appKey = "f9f2b89235e1be4f3a190353f3200dd2e0598d0462a7a566";
-		#elif UNITY_IOS
+#elif UNITY_IOS
 			appKey = "3643ba340b0cacc468bad0eec1e9c76c2394e3d9b40974f0";
-		#endif
-		Appodeal.initialize(appKey, adTypes, this); 
-		
+#endif
 		Appodeal.setInterstitialCallbacks(this);
 		Appodeal.setRewardedVideoCallbacks(this);
+
+		Appodeal.initialize(appKey, adTypes, this); 
+		
+
 		
 		Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
 		Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
