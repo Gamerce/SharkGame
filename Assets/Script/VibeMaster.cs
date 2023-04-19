@@ -20,7 +20,7 @@ public class VibeMaster : MonoBehaviour
 			return force * defaultCurve.Evaluate(percentage);
 		}
 	}
-	public AnimationCurve vibeCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(0.05f, 1), new Keyframe(0,0)});
+	public AnimationCurve vibeCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0, 1), new Keyframe(1,0)});
 	public List<Vibe> vibes = new List<Vibe>();
 
 	float lastVibe = 0;
@@ -34,25 +34,25 @@ public class VibeMaster : MonoBehaviour
 
 	private void OnDisable() {
 		#if UNITY_ANDROID
-		Vibrator.AndroidVibrate(0,0);
+		Vibrator.AndroidVibrate(0,1);
 		#endif
 	}
 
 	// Update is called once per frame
 	void Update()
     {
-		UpdateVibe();
         float currentVibe = GetVibe();
 		if(!VibrateOn)
 			currentVibe = 0;
 		if(currentVibe != lastVibe){
 			lastVibe = currentVibe;
 			#if UNITY_ANDROID
-			Vibrator.AndroidVibrate(500, Mathf.Min((int)(lastVibe * 255), 255));
+			Vibrator.AndroidVibrate(50,Mathf.Max(1,Mathf.Min((int)(lastVibe * 255.0f), 255)));
 			#endif
 			//Handheld.Vibrate();//lastVibe
 			//Debug.Log("Vibrate!");
 		}
+		UpdateVibe();
     }
 
 	public void SetActive(bool enabled){
@@ -62,7 +62,7 @@ public class VibeMaster : MonoBehaviour
 	public void AddVibe(float force, float duration, AnimationCurve specialCurve = null){
 		Vibe temp = new Vibe();
 		temp.force = force/3;
-		temp.duration = duration/3;
+		temp.duration = duration/50;
 		temp.atTime = 0;
 		temp.uniqueCurve = specialCurve;
 		vibes.Add(temp);

@@ -168,7 +168,7 @@ public class RewardBase : MonoBehaviour
 		canBouncer.AddBounce(1.5f);
 		fillValue += coinValue;
 		if(GameHandler.instance != null){
-			GameHandler.instance.AddForce(0.1f, 0.2f);
+			GameHandler.instance.AddForce(0.1f, 0.1f);
 		}
 	}
 
