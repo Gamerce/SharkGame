@@ -57,6 +57,16 @@ public class RewardBase : MonoBehaviour
     }
 
 	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+		//GameObject[] roots = UnityEngine.SceneManagement.Scene.GetRootGameObjects();
+		Camera[] cameras = Camera.allCameras;
+		for(int index = 0; index < cameras.Length; index++){
+			if(!cameras[index].transform.IsChildOf(transform)){
+				cameras[index].enabled = false;
+			}
+		}
+		if(AdMaster.instance != null){
+			AdMaster.instance.ShowInterstitial(null, null);
+		}
 		PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount", 0) + rewardAmount);
 		//totalCoinAmount.AddAmount(rewardAmount);
 		hatSelector.camDisplayRoot.gameObject.SetActive(true);
@@ -158,7 +168,7 @@ public class RewardBase : MonoBehaviour
 		canBouncer.AddBounce(1.5f);
 		fillValue += coinValue;
 		if(GameHandler.instance != null){
-			GameHandler.instance.AddForce(0.1f, 0.3f);
+			GameHandler.instance.AddForce(0.1f, 0.2f);
 		}
 	}
 

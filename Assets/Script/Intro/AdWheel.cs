@@ -62,6 +62,7 @@ public class AdWheel : MonoBehaviour
     }
 
 	public void Show(int amount, System.Action<int> onDone){
+		AdMaster.instance.PrepareVideo();
 		root.SetActive(true);
 		this.onDone = onDone;
 		baseCoins = amount;
@@ -102,16 +103,28 @@ public class AdWheel : MonoBehaviour
 		if(enabled){
 			enabled = false;
 			stopArrow = true;
-			UTween temp = UTween.Fade(fader, new Vector2(0,1), 0.3f);
-			temp.onDone = ()=>{
-				enabled = true;
-				root.SetActive(false);
-				if(onDone != null){
-					onDone.Invoke(baseCoins * GetMultiplier());
-					//rBase.AdWheelComplete(baseCoins * GetMultiplier());
-				}
-			};
-			Debug.LogError("View Ad Here");
+			AdMaster.instance.ShowRewardVideo(()=>{
+				UTween temp = UTween.Fade(fader, new Vector2(0,1), 0.3f);
+				temp.onDone = ()=>{
+					enabled = true;
+					root.SetActive(false);
+					if(onDone != null){
+						onDone.Invoke(baseCoins * GetMultiplier());
+						//rBase.AdWheelComplete(baseCoins * GetMultiplier());
+					}
+				};
+			},()=>{
+				UTween temp = UTween.Fade(fader, new Vector2(0,1), 0.3f);
+				temp.onDone = ()=>{
+					enabled = true;
+					root.SetActive(false);
+					if(onDone != null){
+						onDone.Invoke(baseCoins * 1);
+						//rBase.AdWheelComplete(baseCoins * GetMultiplier());
+					}
+				};
+			});
+			//Debug.LogError("View Ad Here");
 		}
 	}
 

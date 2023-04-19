@@ -32,8 +32,14 @@ public class VibeMaster : MonoBehaviour
         VibrateOn = PlayerPrefs.GetInt("VibrateOn", 0) == 1;
     }
 
-    // Update is called once per frame
-    void Update()
+	private void OnDisable() {
+		#if UNITY_ANDROID
+		Vibrator.AndroidVibrate(0,0);
+		#endif
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		UpdateVibe();
         float currentVibe = GetVibe();
@@ -41,8 +47,11 @@ public class VibeMaster : MonoBehaviour
 			currentVibe = 0;
 		if(currentVibe != lastVibe){
 			lastVibe = currentVibe;
-			Handheld.Vibrate();//lastVibe
-			Debug.Log("Vibrate!");
+			#if UNITY_ANDROID
+			Vibrator.AndroidVibrate(500, Mathf.Min((int)(lastVibe * 255), 255));
+			#endif
+			//Handheld.Vibrate();//lastVibe
+			//Debug.Log("Vibrate!");
 		}
     }
 

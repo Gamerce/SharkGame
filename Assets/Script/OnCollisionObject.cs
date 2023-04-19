@@ -85,6 +85,8 @@ public class OnCollisionObject : MonoBehaviour
                         _npc.ArmourParts.RemoveAt(0);
                         _npc.hitCount = 0;
                     }
+					GameHandler.instance.AddForce(0.5f,0.2f);
+					
                     _npc._hitDelay = 0.05f;
                     _npc.hitCount++;
                 }
@@ -111,6 +113,9 @@ public class OnCollisionObject : MonoBehaviour
                                 _npc.Explode();
                                 _npc.hitCount = 0;
                             }
+							else{
+								GameHandler.instance.AddForce(0.5f,0.2f);
+							}
                             _npc._hitDelay = 0.4f;
                             _npc.hitCount++;
                         }
