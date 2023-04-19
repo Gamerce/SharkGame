@@ -339,7 +339,7 @@ public class NPC : MonoBehaviour
 
         if(isBoss)
         {
-			GameHandler.instance.AddForce(1,0.5f);
+			GameHandler.instance.AddForce(1,0.3f);
 			GameHandler.instance.AddScore((int)Random.Range(30,50));
              power = 250;
              dir = transform.position - avgPos;
@@ -352,7 +352,7 @@ public class NPC : MonoBehaviour
         }
         else
         {
-			GameHandler.instance.AddForce(0.75f,0.5f);
+			GameHandler.instance.AddForce(0.75f,0.3f);
 
             if (Random.Range(0, 100) < 50)
             {

@@ -79,7 +79,7 @@ public class CheeseEater : MonoBehaviour
 					hatFitter.TriggerBite();
 				}
 				if(GameHandler.instance != null){
-					GameHandler.instance.AddForce(0.5f, 0.3f);
+					GameHandler.instance.AddForce(0.5f, 0.2f);
 				}
 				
 				UTween.Clear(sharkRoot);

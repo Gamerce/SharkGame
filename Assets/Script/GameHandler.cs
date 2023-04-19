@@ -13,8 +13,11 @@ public class GameHandler : MonoBehaviour
     public static GameHandler instance   // property
     {
         get {
-            if (_instance == null)
-                _instance= GameObject.Find("GameHandler").GetComponent<GameHandler>();
+            if (_instance == null){
+				GameObject handler = GameObject.Find("GameHandler");
+				if(handler != null)
+	                _instance = handler.GetComponent<GameHandler>();
+			}
             return _instance;
         }   // get method
 
@@ -234,8 +237,6 @@ public class GameHandler : MonoBehaviour
 	}
 
 	public void AddForce(float force, float duration){
-        //if(viber != null)
-        //	viber.AddVibe(force, duration);
 #if UNITY_IPHONE
         if (force>0.6)
             Vibrator.iOSVibrate(ImpactTypeFeedback.IMPACT_HEAVY);
@@ -246,7 +247,9 @@ public class GameHandler : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-        Vibrator.AndroidVibrate(HapticFeedbackConstants.CONFIRM);
+		//if(viber != null)
+		//	viber.AddVibe(force, duration);
+		Vibrator.AndroidVibrate(HapticFeedbackConstants.CONFIRM);
         //Vibrator.AndroidVibrate(Convert.ToInt64(duration/2), Convert.ToInt32(force));
 #endif
 
