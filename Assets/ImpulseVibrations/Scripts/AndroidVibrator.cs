@@ -48,6 +48,7 @@ namespace ImpulseVibrations
 		{
 			if (Vibrator != null && GetAndroidSDKLevel() >= 26)
 			{
+				amplitude = amplitude == 0 ? 1 : amplitude;
 				int validAmlitude = Mathf.Min(Mathf.Max(-1, amplitude), 255);
 				AndroidJavaObject vibrationEffect = VibrationEffect.CallStatic<AndroidJavaObject>("createOneShot", milliseconds, validAmlitude);
 				Vibrator.Call("vibrate", vibrationEffect);

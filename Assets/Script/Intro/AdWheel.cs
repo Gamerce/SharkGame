@@ -103,7 +103,9 @@ public class AdWheel : MonoBehaviour
 		if(enabled){
 			enabled = false;
 			stopArrow = true;
+			//Debug.LogError("ViewAdClicked");
 			AdMaster.instance.ShowRewardVideo(()=>{
+				//Debug.LogError("Done showing reward video");
 				UTween temp = UTween.Fade(fader, new Vector2(0,1), 0.3f);
 				temp.onDone = ()=>{
 					enabled = true;
@@ -114,6 +116,7 @@ public class AdWheel : MonoBehaviour
 					}
 				};
 			},()=>{
+				//Debug.LogError("Failed showing reward video");
 				UTween temp = UTween.Fade(fader, new Vector2(0,1), 0.3f);
 				temp.onDone = ()=>{
 					enabled = true;

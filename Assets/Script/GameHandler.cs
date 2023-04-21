@@ -247,9 +247,9 @@ public class GameHandler : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-		//if(viber != null)
-		//	viber.AddVibe(force, duration);
-		Vibrator.AndroidVibrate(HapticFeedbackConstants.CONFIRM);
+		if(viber != null)
+			viber.AddVibe(force, duration);
+		//Vibrator.AndroidVibrate(HapticFeedbackConstants.CONFIRM);
         //Vibrator.AndroidVibrate(Convert.ToInt64(duration/2), Convert.ToInt32(force));
 #endif
 

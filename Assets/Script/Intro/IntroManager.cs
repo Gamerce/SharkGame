@@ -24,6 +24,8 @@ public class IntroManager : MonoBehaviour
 		if(Application.isEditor){
 			Application.targetFrameRate = 30;
 		}
+		if(AdMaster.instance != null){
+		}
     }
 
     // Update is called once per frame

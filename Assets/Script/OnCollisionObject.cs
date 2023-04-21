@@ -201,11 +201,62 @@ public class OnCollisionObject : MonoBehaviour
 
             }
 
-
+			if(_npc.isBoss){
+				CheckBossEffects(collision);
+			}
+			else
+				CheckRegularNpcEffects(collision);
 
 
 
 
         }
     }
+
+	void CheckRegularNpcEffects(Collision collision){
+		if(collision.gameObject.name == "WaterTower"){
+			Animation anim = collision.transform.parent.GetComponent<Animation>();
+			if(anim.clip != null && anim.clip.name == "WaterTowerAnim")
+				anim.Play("WaterTowerAnim");
+			if(anim.clip != null && anim.clip.name == "WaterTowerAnim2")
+				anim.Play("WaterTowerAnim2");
+			List<Transform> kids = new List<Transform>();
+			for(int index = 0; index < collision.transform.childCount; index++){
+				Transform trans = collision.transform.GetChild(index);
+				if(!trans.gameObject.activeSelf)
+					kids.Add(trans);
+			}
+			if(kids.Count > 0){
+				Transform target = kids[kids.Count == 1 ? 0 : Random.Range(0, kids.Count-1)];
+				target.gameObject.SetActive(true);
+			}
+		}
+		
+	}
+
+	void CheckBossEffects(Collision collision){
+		if(collision.gameObject.name == "ToiletCollider"){
+			collision.transform.parent.GetComponent<Animation>().Play("ToiletAnim");
+		}
+		if(collision.gameObject.name == "ToiletCollider"){
+			collision.transform.parent.GetComponent<Animation>().Play("ToiletAnim");
+		}
+		if(collision.gameObject.name == "InsideCar"){
+			Animation anim = collision.transform.parent.GetComponent<Animation>();
+			//anim.pla
+			collision.transform.parent.GetComponent<Animation>().Play("CarDriving");
+			collision.transform.GetChild(0).gameObject.SetActive(true);
+			_npc.transform.SetParent(collision.transform, true);
+		}
+		if(collision.gameObject.name == "Pillar 02 (8)"){
+			PillarFall faller = collision.transform.GetComponent<PillarFall>();
+			faller.TriggerFall(_npc.transform.Find("Hips"));
+			//anim.pla
+			//collision.transform.parent.GetComponent<Animation>().Play("CarDriving");
+			//collision.transform.GetChild(0).gameObject.SetActive(true);
+			//_npc.transform.SetParent(collision.transform, true);
+		}
+
+		
+	}
 }
