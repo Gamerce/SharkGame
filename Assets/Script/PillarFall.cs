@@ -68,13 +68,13 @@ public class PillarFall : MonoBehaviour
 		//	velocity += (transform.position - target.position).normalized * Time.deltaTime;
 		//velocity += (target.position - transform.position).normalized * Time.deltaTime * fallSpeed;
 		velocity += collissionDir * Time.deltaTime * fallSpeed;
-		velocity = Vector3.Lerp(velocity, Vector3.zero, Time.deltaTime);
+		//velocity = Vector3.Lerp(velocity, Vector3.zero, Time.deltaTime);
 		
 		Vector3 dir = tilt.normalized;
 		Vector3 axis = Vector3.Cross(-dir, Vector3.up);
 		float tiltAmount = tilt.magnitude;
-		angle = ((Mathf.Clamp(tiltAmount, 0, tiltStrength) / tiltStrength)) * 90;
-		if(angle > 90){
+		angle = ((Mathf.Clamp(tiltAmount, 0, tiltStrength) / tiltStrength)) * 120;
+		if(angle > 110){
 			enabled = false;
 			//Vector3 localEu = splatter.transform.localRotation.eulerAngles;
 			//splatter.transform.parent = transform.parent;

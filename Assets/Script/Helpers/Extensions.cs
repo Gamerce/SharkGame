@@ -11,7 +11,7 @@ public static class Extensions {
 
 	static public AnimationCurve GetDefaultCurve(bool reversed = false){
 		if(reversed)
-			return new AnimationCurve(new Keyframe[]{new Keyframe(1,1), new Keyframe(0,0)});
+			return new AnimationCurve(new Keyframe[]{new Keyframe(0,1), new Keyframe(1,0)});
 		else
 			return new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(1,1)});
 	}
@@ -160,7 +160,11 @@ public static class Extensions {
 	#endregion
 
 	#region Vector3
-
+	
+	static public Vector3 SetY(this Vector3 thisVal, float yVal)
+	{
+		return new Vector3(thisVal.x, yVal, thisVal.z);
+	}
 	
 	static public Vector3 GetVector3X(this Vector2 thisVal)
 	{

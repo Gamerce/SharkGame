@@ -215,13 +215,16 @@ public class OnCollisionObject : MonoBehaviour
 
 	void CheckRegularNpcEffects(Collision collision){
 		if(collision.gameObject.name == "WaterTower"){
-			if(collision.gameObject.GetComponent<UTween>() == null){
-				UTween.Wait(collision.gameObject, 0.3f, null);
-				Animation anim = collision.transform.parent.GetComponent<Animation>();
-				if(anim.clip != null && anim.clip.name == "WaterTowerAnim")
-					anim.Play("WaterTowerAnim");
-				if(anim.clip != null && anim.clip.name == "WaterTowerAnim2")
-					anim.Play("WaterTowerAnim2");
+			if(collision.transform.parent.gameObject.GetComponent<UTween>() == null){
+				Vector3 dir = (collision.transform.parent.position - transform.position).SetY(0).normalized * 0.08f;
+				UTween temp = UTween.MoveTo(collision.transform.parent, collision.transform.parent.position + dir, 0.5f, true);
+				temp.SetCurve(Extensions.GetBaselineShakeCurve(3, 1.0f, Extensions.GetDefaultCurve(true), new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(1,0)})));
+				//UTween.Wait(collision.gameObject, 0.3f, null);
+				//Animation anim = collision.transform.parent.GetComponent<Animation>();
+				//if(anim.clip != null && anim.clip.name == "WaterTowerAnim")
+				//	anim.Play("WaterTowerAnim");
+				//if(anim.clip != null && anim.clip.name == "WaterTowerAnim2")
+				//	anim.Play("WaterTowerAnim2");
 				List<Transform> kids = new List<Transform>();
 				for(int index = 0; index < collision.transform.childCount; index++){
 					Transform trans = collision.transform.GetChild(index);

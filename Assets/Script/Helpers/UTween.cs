@@ -16,6 +16,7 @@ public class UTween : MonoBehaviour
 		Wait,
 		Flash,
 		Scale,
+		ShakeTween,
 
 		Count,
 	}
@@ -78,17 +79,17 @@ public class UTween : MonoBehaviour
 		if(usedType == TweenType.PositionTween){
 			if(targetTrans != null){
 				if(useWorldSpace){
-					targetTrans.position = Vector3.Lerp(startPos, targetPos, curve.Evaluate(percent));
+					targetTrans.position = Vector3.LerpUnclamped(startPos, targetPos, curve.Evaluate(percent));
 				}
 				else
-					targetTrans.localPosition = Vector3.Lerp(startPos, targetPos, curve.Evaluate(percent));
+					targetTrans.localPosition = Vector3.LerpUnclamped(startPos, targetPos, curve.Evaluate(percent));
 			}
 			if(targetRectTrans != null){
 				if(useWorldSpace){
-					targetRectTrans.position = Vector3.Lerp(startPos, targetPos, curve.Evaluate(percent));
+					targetRectTrans.position = Vector3.LerpUnclamped(startPos, targetPos, curve.Evaluate(percent));
 				}
 				else
-					targetRectTrans.anchoredPosition = Vector2.Lerp(startPos.GetVector2Z(), targetPos.GetVector2Z(), curve.Evaluate(percent));
+					targetRectTrans.anchoredPosition = Vector2.LerpUnclamped(startPos.GetVector2Z(), targetPos.GetVector2Z(), curve.Evaluate(percent));
 			}
 		}
 		else if(usedType == TweenType.RotationShakeTween){
@@ -269,6 +270,25 @@ public class UTween : MonoBehaviour
 		tween.SetPercentage(0);
 		return tween;
 	}
+
+	//public static UTween Shake(Transform targetTrans, Vector3 effectedAngles, float force, float time, int shakes = 20, AnimationCurve shakeEvaluator){
+	//	if(!Application.isPlaying){
+	//		Debug.LogError("Only use UTween when the game is active.");
+	//		return null;
+	//	}
+	//	UTween tween = targetTrans.gameObject.AddComponent<UTween>();
+	//	
+	//	tween.usedType = TweenType.ShakeTween;
+	//	tween.curve = Extensions.GetShakeCurve(shakes, 1, shakeEvaluator);
+	//
+	//	tween.targetPos = effectedAngles;
+	//	tween.targetRectTrans = targetTrans;
+	//	tween.duration = time;
+	//	tween.startPos = useWorldSpace ? targetTrans.rotation.eulerAngles : targetTrans.localRotation.eulerAngles;
+	//	tween.usedType = TweenType.RotationShakeTween;
+	//	tween.SetPercentage(0);
+	//	return tween;
+	//}
 	
 	public static UTween Rotate(RectTransform targetTrans, Vector3 startRotation, Vector3 targetRotation, float time, float delay = -1, bool useWorldSpace = false){
 		if(!Application.isPlaying){
