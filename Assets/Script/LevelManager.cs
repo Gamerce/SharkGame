@@ -24,6 +24,11 @@ public class LevelManager : MonoBehaviour
         }
         //CurrentLevel = 1;
         LoadLevel(CurrentLevel);
+		GameHandler.instance.fadeImage.enabled = true;
+		UTween tweener = UTween.Fade(GameHandler.instance.fadeImage, new Vector2(1,0), 0.3f);
+		tweener.onDone = ()=>{
+			GameHandler.instance.fadeImage.enabled = false;
+		};
     }
 
     // Update is called once per frame
@@ -88,6 +93,10 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(0.95f);
         GameHandler.instance.WinEffect.SetActive(true);
         yield return new WaitForSeconds(1.5f);
+		GameHandler.instance.fadeImage.enabled = true;
+		UTween.Fade(GameHandler.instance.fadeImage, new Vector2(0,1), 0.3f);
+		yield return new WaitForSeconds(0.3f);
+		GameHandler.instance.fadeImage.enabled = false;
 		GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore, LoadNextScene, true);
 		Canvas parentCan = GameHandler.instance.tutorialHand.GetComponentInParent<Canvas>();
 		parentCan.gameObject.SetActive(false);

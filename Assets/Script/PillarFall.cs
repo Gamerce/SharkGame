@@ -8,6 +8,7 @@ public class PillarFall : MonoBehaviour
 
 	Transform target;
 	Vector3 velocity = Vector3.zero;
+	Vector3 collissionDir;
 	public float fallSpeed = 5;
 	Vector3 tilt;
 
@@ -65,20 +66,21 @@ public class PillarFall : MonoBehaviour
 		//}
 		//else
 		//	velocity += (transform.position - target.position).normalized * Time.deltaTime;
-		velocity += (target.position - transform.position).normalized * Time.deltaTime * fallSpeed;
+		//velocity += (target.position - transform.position).normalized * Time.deltaTime * fallSpeed;
+		velocity += collissionDir * Time.deltaTime * fallSpeed;
 		velocity = Vector3.Lerp(velocity, Vector3.zero, Time.deltaTime);
 		
 		Vector3 dir = tilt.normalized;
 		Vector3 axis = Vector3.Cross(-dir, Vector3.up);
 		float tiltAmount = tilt.magnitude;
 		angle = ((Mathf.Clamp(tiltAmount, 0, tiltStrength) / tiltStrength)) * 90;
-		if(angle > 70){
+		if(angle > 90){
 			enabled = false;
-			Vector3 localEu = splatter.transform.localRotation.eulerAngles;
-			splatter.transform.parent = transform.parent;
-			splatter.transform.localRotation = Quaternion.Euler(localEu);
-			splatter.transform.position = target.position;
-			splatter.SetActive(true);
+			//Vector3 localEu = splatter.transform.localRotation.eulerAngles;
+			//splatter.transform.parent = transform.parent;
+			//splatter.transform.localRotation = Quaternion.Euler(localEu);
+			//splatter.transform.position = target.position;
+			//splatter.SetActive(true);
 		}
 		transform.rotation = Quaternion.AngleAxis(angle, axis);
 
@@ -89,7 +91,8 @@ public class PillarFall : MonoBehaviour
 
 	public void TriggerFall(Transform hitTarget, float hitSize = 0.5f){
 		target = hitTarget;
-		velocity = forwardMod;
+		collissionDir = (transform.position - target.position).normalized;
+		velocity = collissionDir;
 		isFalling = true;
 	}
 

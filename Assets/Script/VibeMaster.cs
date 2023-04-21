@@ -46,8 +46,10 @@ public class VibeMaster : MonoBehaviour
 			currentVibe = 0;
 		if(currentVibe != lastVibe){
 			lastVibe = currentVibe;
+			float length = GetLength();
+			int mili = (int)(length*1000.0f);
 			#if UNITY_ANDROID
-			Vibrator.AndroidVibrate(50,Mathf.Max(1,Mathf.Min((int)(lastVibe * 255.0f), 255)));
+			Vibrator.AndroidVibrate(Mathf.Min(mili, 50),Mathf.Max(1,Mathf.Min((int)(lastVibe * 255.0f), 255)));
 			#endif
 			//Handheld.Vibrate();//lastVibe
 			//Debug.Log("Vibrate!");
@@ -62,7 +64,7 @@ public class VibeMaster : MonoBehaviour
 	public void AddVibe(float force, float duration, AnimationCurve specialCurve = null){
 		Vibe temp = new Vibe();
 		temp.force = force/3;
-		temp.duration = duration/50;
+		temp.duration = duration/6;
 		temp.atTime = 0;
 		temp.uniqueCurve = specialCurve;
 		vibes.Add(temp);
@@ -86,5 +88,13 @@ public class VibeMaster : MonoBehaviour
 			totalForce += vibes[index].Evaluate(vibeCurve);
 		}
 		return totalForce.Clamp01();
+	}
+
+	float GetLength(){
+		float totalForce = 0;
+		for(int index = 0; index < vibes.Count; index++){
+			totalForce = Mathf.Max(totalForce, vibes[index].duration - vibes[index].atTime);
+		}
+		return totalForce;
 	}
 }

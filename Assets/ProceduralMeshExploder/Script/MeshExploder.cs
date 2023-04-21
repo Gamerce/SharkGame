@@ -209,6 +209,7 @@ namespace ProceduralMeshExploder
 			for(int index = 0; index < clustersArray.Length; index++){
 				clustersArray[index].transform.SetParent(transform, true);
 				clustersArray[index].GetComponent<Renderer>().enabled = false;
+				clustersArray[index].gameObject.SetActive(false);
 			}
 			
             //float alpha = 0.0f;

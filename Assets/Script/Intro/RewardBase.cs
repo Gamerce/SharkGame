@@ -64,9 +64,6 @@ public class RewardBase : MonoBehaviour
 				cameras[index].enabled = false;
 			}
 		}
-		if(AdMaster.instance != null){
-			AdMaster.instance.ShowInterstitial(null, null);
-		}
 		PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount", 0) + rewardAmount);
 		//totalCoinAmount.AddAmount(rewardAmount);
 		hatSelector.camDisplayRoot.gameObject.SetActive(true);
@@ -74,7 +71,7 @@ public class RewardBase : MonoBehaviour
 		gameObject.SetActive(true);
 
 		goldGainAmount.SetText(rewardAmount.ToString());
-		goldGainAmounttext.text = rewardAmount.ToString(); ;
+		goldGainAmounttext.text = rewardAmount.ToString();
 
 		this.onDone = onDone;
 		this.fadeOutWhenDone = fadeOutWhenDone;
@@ -139,6 +136,10 @@ public class RewardBase : MonoBehaviour
 					});
 				});
 			};
+		}
+		
+		if(AdMaster.instance != null){
+			AdMaster.instance.ShowInterstitial(null, null);
 		}
 	}
 

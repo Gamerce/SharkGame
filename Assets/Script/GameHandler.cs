@@ -53,6 +53,8 @@ public class GameHandler : MonoBehaviour
     public GameObject BoomEffect;
     public GameObject SharkHeadEat;
 
+	public Image fadeImage;
+
     public int CurrentCanScore = 0;
 	bool forceTimeStop = false;
 

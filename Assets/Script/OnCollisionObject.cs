@@ -215,20 +215,23 @@ public class OnCollisionObject : MonoBehaviour
 
 	void CheckRegularNpcEffects(Collision collision){
 		if(collision.gameObject.name == "WaterTower"){
-			Animation anim = collision.transform.parent.GetComponent<Animation>();
-			if(anim.clip != null && anim.clip.name == "WaterTowerAnim")
-				anim.Play("WaterTowerAnim");
-			if(anim.clip != null && anim.clip.name == "WaterTowerAnim2")
-				anim.Play("WaterTowerAnim2");
-			List<Transform> kids = new List<Transform>();
-			for(int index = 0; index < collision.transform.childCount; index++){
-				Transform trans = collision.transform.GetChild(index);
-				if(!trans.gameObject.activeSelf)
-					kids.Add(trans);
-			}
-			if(kids.Count > 0){
-				Transform target = kids[kids.Count == 1 ? 0 : Random.Range(0, kids.Count-1)];
-				target.gameObject.SetActive(true);
+			if(collision.gameObject.GetComponent<UTween>() == null){
+				UTween.Wait(collision.gameObject, 0.3f, null);
+				Animation anim = collision.transform.parent.GetComponent<Animation>();
+				if(anim.clip != null && anim.clip.name == "WaterTowerAnim")
+					anim.Play("WaterTowerAnim");
+				if(anim.clip != null && anim.clip.name == "WaterTowerAnim2")
+					anim.Play("WaterTowerAnim2");
+				List<Transform> kids = new List<Transform>();
+				for(int index = 0; index < collision.transform.childCount; index++){
+					Transform trans = collision.transform.GetChild(index);
+					if(!trans.gameObject.activeSelf)
+						kids.Add(trans);
+				}
+				if(kids.Count > 0){
+					Transform target = kids[kids.Count == 1 ? 0 : Random.Range(0, kids.Count-1)];
+					target.gameObject.SetActive(true);
+				}
 			}
 		}
 		
