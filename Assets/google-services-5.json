@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "395745827322",
+    "project_id": "sharkpuppet-3d",
+    "storage_bucket": "sharkpuppet-3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395745827322:android:88f327d981dab9593e2c43",
+        "android_client_info": {
+          "package_name": "com.influencer.SharkPuppet3D"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395745827322-vgjlvun7cfdpogoucq4j46mpvcpt7j7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0owDm541wxk_OBmDKcX72wHQ6Lzg-vN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395745827322-vgjlvun7cfdpogoucq4j46mpvcpt7j7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

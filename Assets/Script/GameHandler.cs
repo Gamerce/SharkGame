@@ -6,6 +6,8 @@ using ImpulseVibrations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VoxelBusters.CoreLibrary;
+using VoxelBusters.EssentialKit;
 
 public class GameHandler : MonoBehaviour
 {
@@ -58,6 +60,7 @@ public class GameHandler : MonoBehaviour
     public int CurrentCanScore = 0;
 	bool forceTimeStop = false;
 
+
 	public VibeMaster viber;
     // Start is called before the first frame update
     void Start()
@@ -68,8 +71,70 @@ public class GameHandler : MonoBehaviour
 
 
         //Screen.SetResolution(Screen.width / 4*3, Screen.height / 4 *3, true);
-        
 
+        VoxelBusters.EssentialKit.NotificationServices.RequestPermission(NotificationPermissionOptions.Alert | NotificationPermissionOptions.Sound | NotificationPermissionOptions.Badge, callback: (result, error) =>
+    {
+        Debug.Log("Request for access finished.");
+        Debug.Log("Notification access status: " + result.PermissionStatus);
+    });
+
+
+        SheduelNotifcations();
+
+    }
+
+    [Obsolete]
+    public void SheduelNotifcations()
+    {
+
+        List<string> text = new List<string>();
+        text.Add("Shark Puppet is hungry for cheese, come back and let’s smack some people around.");
+        text.Add("Shark Puppet misses you :disappointed: please come back!");
+        text.Add("Shark Puppet is Huuunnggggry, it's time to get some cheese.:cheese_wedge:");
+        text.Add("I can hear Shark Puppets tummy grumbling.");
+        text.Add("Time to collect a new hat :womans_hat:");
+        text.Add("Are you ready to have fun and smack some people.");
+        text.Add("Shark Puppet needs you.");
+        text.Add(":cheese_wedge:Cheese is ready to be collected:cheese_wedge:");
+        text.Add("Help Shark Puppet on the next mission.");
+        text.Add("Shark Puppet is waiting for your help on a mission.");
+        text.Add("Help Shark Puppet find some delicious cheese");
+        text.Add("Time to get Shark Puppet to the next level.");
+        text.Add("Cheese - loving Shark Puppet is waiting for you :clock1:.");
+        text.Add("Your next outrageous adventure with Shark Puppet awaits.");
+        text.Add("Shark Puppet is lonely without you :smiling_face_with_tear:");
+
+
+
+        VoxelBusters.EssentialKit.NotificationServices.CancelAllScheduledNotifications();
+
+        SheduleNotification("24h",text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24);
+        SheduleNotification("7d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*7);
+        SheduleNotification("14d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*14);
+        SheduleNotification("28d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*28);
+
+
+    }
+    [Obsolete]
+    public void SheduleNotification(string idN, string text, int timeSeconds)
+    {
+
+        INotification notification = NotificationBuilder.CreateNotification(idN)
+            .SetTitle(text)
+            .SetTimeIntervalNotificationTrigger(timeSeconds) //Setting the time interval to 10 seconds
+            .Create();
+
+        VoxelBusters.EssentialKit.NotificationServices.ScheduleNotification(notification, (error) =>
+        {
+            if (error == null)
+            {
+                Debug.Log("Request to schedule notification finished successfully.");
+            }
+            else
+            {
+                Debug.Log("Request to schedule notification failed with error. Error: " + error);
+            }
+        });
     }
     public void Init()
     {
