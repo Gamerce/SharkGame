@@ -107,6 +107,8 @@ public class GameHandler : MonoBehaviour
 
 
         VoxelBusters.EssentialKit.NotificationServices.CancelAllScheduledNotifications();
+		
+		RequestNotificationAccess();
 
         SheduleNotification("24h",text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24);
         SheduleNotification("7d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*7);
@@ -115,6 +117,14 @@ public class GameHandler : MonoBehaviour
 
 
     }
+
+	public void RequestNotificationAccess(){
+		if(PlayerPrefs.GetInt("RequestNotifications", 0) == 0){
+			VoxelBusters.EssentialKit.NotificationServices.RequestPermission(NotificationPermissionOptions.Provisional);
+			PlayerPrefs.SetInt("RequestNotifications", 1);
+		}
+	}
+
     [Obsolete]
     public void SheduleNotification(string idN, string text, int timeSeconds)
     {
