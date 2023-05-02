@@ -138,7 +138,8 @@ public class GameHandler : MonoBehaviour
     {
 
         INotification notification = NotificationBuilder.CreateNotification(idN)
-            .SetTitle(text)
+           .SetTitle("Shark Puppet")
+            .SetBody(text)
             .SetTimeIntervalNotificationTrigger(timeSeconds) //Setting the time interval to 10 seconds
             .Create();
 
