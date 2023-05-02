@@ -59,9 +59,12 @@ public class GameHandler : MonoBehaviour
 
     public int CurrentCanScore = 0;
 	bool forceTimeStop = false;
-
+	
+	public int playerLives = 2;
+	public Image damageTaken;
 
 	public VibeMaster viber;
+	public RateAppPopup rater;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,8 +83,10 @@ public class GameHandler : MonoBehaviour
 
 
         SheduelNotifcations();
-
-    }
+		UTween.Wait(gameObject, 1.75f, ()=>{
+			rater.TryRateApp();
+    	});
+	}
 
     [Obsolete]
     public void SheduelNotifcations()
@@ -351,5 +356,14 @@ public class GameHandler : MonoBehaviour
         _LevelManager.ResetLevel();
 
     }
-
+	
+	public void AttackPlayer(){
+		playerLives--;
+		if(playerLives <= 0){
+			GameOverScreen.SetActive(true);
+		}
+		else{
+			UTween.Fade(damageTaken, new Vector2(0,1), 0.3f, -1, new AnimationCurve(new Keyframe[]{new Keyframe(0,0), new Keyframe(0.2f, 1), new Keyframe(1,0)}));
+		}
+	}
 }

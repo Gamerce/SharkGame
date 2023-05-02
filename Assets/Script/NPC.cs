@@ -175,7 +175,9 @@ public class NPC : MonoBehaviour
 
                     if (AttackTime > 1.51f)
                     {
-                        GameHandler.instance.GameOverScreen.SetActive(true);
+						AttackTime = 0;
+						GameHandler.instance.AttackPlayer();
+                        //GameHandler.instance.GameOverScreen.SetActive(true);
                     }
 
 
