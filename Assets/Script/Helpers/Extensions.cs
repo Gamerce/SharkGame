@@ -304,7 +304,17 @@ public static class Extensions {
 
 
 	#region string
-
+	
+	static public string ReplaceAll(this string value, string replaceThis, string withThis){
+		
+		bool test = true;
+		while(test){
+			string old = value;
+			value = value.Replace(replaceThis, withThis);
+			test = !(old == value);
+		}
+		return value;
+	}
 
 	static public bool Compare(this string value, string compareTo, bool caseSensetive, bool matchFull, bool splitCaptials)
 	{

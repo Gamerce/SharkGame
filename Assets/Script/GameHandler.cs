@@ -103,13 +103,21 @@ public class GameHandler : MonoBehaviour
         text.Add("Cheese - loving Shark Puppet is waiting for you :clock1:.");
         text.Add("Your next outrageous adventure with Shark Puppet awaits.");
         text.Add("Shark Puppet is lonely without you :smiling_face_with_tear:");
-
+		#if UNITY_ANDROID
+		for(int index = 0; index < text.Count; index++){
+			text[index] = text[index].ReplaceAll(":cheese_wedge:", "\U0001F601");
+			text[index] = text[index].ReplaceAll(":disappointed:", "\U0001F61E");
+			text[index] = text[index].ReplaceAll(":womans_hat:", "\U0001F452");
+			text[index] = text[index].ReplaceAll(":clock1:", "\U000023F3");
+			text[index] = text[index].ReplaceAll(":smiling_face_with_tear:", "\U0001F972");
+		}
+		#endif
 
 
         VoxelBusters.EssentialKit.NotificationServices.CancelAllScheduledNotifications();
 		
 		RequestNotificationAccess();
-
+		
         SheduleNotification("24h",text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24);
         SheduleNotification("7d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*7);
         SheduleNotification("14d", text[UnityEngine.Random.Range(0, text.Count - 1)], 60 * 60 * 24*14);
