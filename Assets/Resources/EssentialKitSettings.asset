@@ -17,7 +17,7 @@ MonoBehaviour:
     m_appStoreIds:
       m_ios: 
       m_tvos: 
-      m_android: 
+      m_android: com.influencer.SharkPuppet3D
     m_usagePermissionSettings:
       m_addressBookUsagePermission:
         m_description: $productName uses contacts.
@@ -54,11 +54,11 @@ MonoBehaviour:
       m_confirmationDialogSettings:
         m_canShow: 1
         m_promptTitle: Rate My App
-        m_promptDescription: If you enjoy using Native Plugins would you mind taking
-          a moment to rate it? It wont take more than a minute. Thanks for your support.
+        m_promptDescription: Thank you for playing, We would appreciate it, if you
+          would rate the app so that others can join in on the fun!!!
         m_okButtonLabel: Ok
         m_cancelButtonLabel: Cancel
-        m_remindLaterButtonLabel: Remind Me Later
+        m_remindLaterButtonLabel: Later
         m_canShowRemindMeLaterButton: 1
       m_defaultControllerSettings:
         m_initialPromptConstraints:

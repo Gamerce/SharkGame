@@ -83,9 +83,6 @@ public class GameHandler : MonoBehaviour
 
 
         SheduelNotifcations();
-		UTween.Wait(gameObject, 1.75f, ()=>{
-			rater.TryRateApp();
-    	});
 	}
 
     [Obsolete]

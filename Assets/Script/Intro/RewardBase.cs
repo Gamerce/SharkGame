@@ -56,7 +56,8 @@ public class RewardBase : MonoBehaviour
 		totalCoinAmount.SetAmount(PlayerPrefs.GetInt("CoinAmount", 0));
     }
 
-	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true){
+	public void Init(int rewardAmount, System.Action onDone, bool fadeOutWhenDone = true, bool blockAd = false){
+		
 		//GameObject[] roots = UnityEngine.SceneManagement.Scene.GetRootGameObjects();
 		Camera[] cameras = Camera.allCameras;
 		for(int index = 0; index < cameras.Length; index++){
@@ -138,7 +139,7 @@ public class RewardBase : MonoBehaviour
 			};
 		}
 		
-		if(AdMaster.instance != null){
+		if(AdMaster.instance != null && !blockAd){
 			AdMaster.instance.ShowInterstitial(null, null);
 		}
 	}

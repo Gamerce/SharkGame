@@ -11,6 +11,8 @@ public class RateAppPopup : MonoBehaviour
 	public Vector2 hidePos;
 	bool blockClose;
 
+	System.Action<bool> onDone = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,11 @@ public class RateAppPopup : MonoBehaviour
 		temp.onDone += ()=>{
 			gameObject.SetActive(false);
 			blockClose = false;
+			if(onDone != null){
+				System.Action<bool> tempDel = onDone;
+				onDone = null;
+				tempDel.Invoke(true);
+			}
 		};
 		if(GameHandler.instance != null){
 			GameHandler.instance.ForceTimeStop(false);
@@ -54,6 +61,7 @@ public class RateAppPopup : MonoBehaviour
 
 	public void ClickedYes(){
 		PlayerPrefs.SetInt("HasRatedApp", 1);
+		//VoxelBusters.EssentialKit.RateMyApp.as
 		VoxelBusters.EssentialKit.RateMyApp.AskForReviewNow();
 		CloseClicked();
 	}
@@ -66,14 +74,21 @@ public class RateAppPopup : MonoBehaviour
 		gameObject.SetActive(true);
 	}
 
-	public void TryRateApp(){
+	public void TryRateApp(System.Action<bool> callBack){
 		if(PlayerPrefs.GetInt("HasRatedApp", 0) == 1)
 			return;
 		int rateIn = PlayerPrefs.GetInt("RateAppIn", 5);
 		rateIn--;
+		onDone = callBack;
 		if(rateIn <= 0){
 			ShowApp();
 			rateIn = Random.Range(10,15);
+		}
+		else{
+			if(onDone != null){
+				onDone = null;
+				callBack.Invoke(false);
+			}
 		}
 		PlayerPrefs.SetInt("RateAppIn", rateIn);
 	}

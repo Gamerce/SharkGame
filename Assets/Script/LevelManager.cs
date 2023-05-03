@@ -97,9 +97,12 @@ public class LevelManager : MonoBehaviour
 		UTween.Fade(GameHandler.instance.fadeImage, new Vector2(0,1), 0.3f);
 		yield return new WaitForSeconds(0.3f);
 		GameHandler.instance.fadeImage.enabled = false;
-		GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore, LoadNextScene, true);
-		Canvas parentCan = GameHandler.instance.tutorialHand.GetComponentInParent<Canvas>();
-		parentCan.gameObject.SetActive(false);
+		
+		GameHandler.instance.rater.TryRateApp((bool askedForRating)=>{
+			GameHandler.instance._rewardBase.Init((int)Random.Range(30,50) + GameHandler.instance.CurrentCanScore, LoadNextScene, true, askedForRating);
+			Canvas parentCan = GameHandler.instance.tutorialHand.GetComponentInParent<Canvas>();
+			parentCan.gameObject.SetActive(false);
+		});
     }
 
     public void GameFinished()
