@@ -15,7 +15,7 @@ MonoBehaviour:
   m_applicationSettings:
     m_logLevel: 3
     m_appStoreIds:
-      m_ios: 
+      m_ios: com.influencer.Shark-Puppet-3D
       m_tvos: 
       m_android: com.influencer.SharkPuppet3D
     m_usagePermissionSettings:
