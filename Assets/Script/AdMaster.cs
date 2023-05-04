@@ -44,6 +44,9 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	AdInfo rewardVideoAd = new AdInfo();
 
 	public List<CallBackID> debbugerString = new List<CallBackID>();
+	[System.NonSerialized]
+	bool showAdsToggle = false;
+	int skipAdsFor = -1;
 
 	static AdMaster ourInstance;
 	public static AdMaster instance { // This is a property.
@@ -51,6 +54,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 			if(ourInstance == null){
 				GameObject temp = new GameObject("AdMaster");
 				ourInstance = temp.AddComponent<AdMaster>();
+				ourInstance.skipAdsFor = PlayerPrefs.GetInt("skipCount", -1);
+				ourInstance.skipAdsFor = Mathf.Min(ourInstance.skipAdsFor, 3);
 			}
 		  return ourInstance;
 		}
@@ -177,6 +182,20 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	//}
 
 	public void ShowInterstitial(System.Action onSuccess, System.Action onFail){
+		if(skipAdsFor > 0){
+			skipAdsFor--;
+			PlayerPrefs.SetInt("skipCount", skipAdsFor);
+			showAdsToggle = false;
+			if(onFail != null)
+				onFail.Invoke();
+			return;
+		}
+		showAdsToggle = !showAdsToggle;
+		if(!showAdsToggle){
+			if(onFail != null)
+				onFail.Invoke();
+			return;
+		}
 		interstitialAd.onDone = onSuccess;
 		interstitialAd.onFail = onFail;
 		//if(interstitialAd.canShow){
