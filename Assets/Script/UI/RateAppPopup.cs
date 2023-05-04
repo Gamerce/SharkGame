@@ -75,8 +75,11 @@ public class RateAppPopup : MonoBehaviour
 	}
 
 	public void TryRateApp(System.Action<bool> callBack){
-		if(PlayerPrefs.GetInt("HasRatedApp", 0) == 1)
+		if(PlayerPrefs.GetInt("HasRatedApp", 0) == 1){
+			if(callBack != null)
+				callBack.Invoke(false);
 			return;
+		}
 		int rateIn = PlayerPrefs.GetInt("RateAppIn", 5);
 		rateIn--;
 		onDone = callBack;
