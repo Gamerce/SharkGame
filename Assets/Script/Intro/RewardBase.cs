@@ -140,7 +140,13 @@ public class RewardBase : MonoBehaviour
 		}
 		
 		if(AdMaster.instance != null && !blockAd){
-			AdMaster.instance.ShowInterstitial(null, null);
+			AdMaster.instance.ShowInterstitial(()=>{
+				if(MusicManager.instance != null)
+					MusicManager.instance.PlayCheseMusic();
+			}, ()=>{
+				if(MusicManager.instance != null)
+					MusicManager.instance.PlayCheseMusic();
+			});
 		}
 	}
 

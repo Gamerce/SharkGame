@@ -21,6 +21,8 @@ public class MusicManager : MonoBehaviour
 
 	public bool isSoundOn = true;
 	public bool isMusicOn = true;
+
+	bool forcePause = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,15 +43,44 @@ public class MusicManager : MonoBehaviour
         PlayRandomMusic();
     }
     float ScreamTimer = 0;
+	List<bool> isPlaying = new List<bool>();
     // Update is called once per frame
     void Update()
     {
+		if(forcePause){
+			return;
+		}
         if(Music1.isPlaying == false && Music2.volume == 0)
         {
             PlayRandomMusic();
         }
         ScreamTimer -= Time.deltaTime;
     }
+
+	public void PauseMusic(){
+		if(!forcePause){
+			isPlaying.Clear();
+			isPlaying.Add(Music1.isPlaying);
+			isPlaying.Add(Music2.isPlaying);
+			if(Music1.isPlaying)
+				Music1.Pause();
+			if(Music2.isPlaying)
+				Music2.Pause();
+		}
+		enabled = false;
+		forcePause = true;
+	}
+
+	public void ResumeMusic(){
+		if(forcePause){
+			if(isPlaying.Count > 0 && isPlaying[0])
+				Music1.UnPause();
+			if(isPlaying.Count > 1 && isPlaying[1])
+				Music2.UnPause();
+		}
+		enabled = true;
+		forcePause = false;
+	}
 
     public void PlayRandomMusic()
     {
@@ -71,9 +102,9 @@ public class MusicManager : MonoBehaviour
     }
 
     public void PlayCheseMusic()
-    {
-        Music2.volume = isMusicOn ? MAX_VOLUME : 0;
-        Music1.volume = 0;
+	{
+		Music2.volume = isMusicOn ? MAX_VOLUME : 0;
+		Music1.volume = 0;
     }
 
 	public void SetMusicOnOff(bool isOn){

@@ -200,6 +200,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 		interstitialAd.onFail = onFail;
 		//if(interstitialAd.canShow){
 			if(Appodeal.isLoaded(Appodeal.INTERSTITIAL) && !Application.isEditor){
+				if(MusicManager.instance != null)
+					MusicManager.instance.PauseMusic();
 				Appodeal.show(Appodeal.INTERSTITIAL);
 				//Appodeal.setInterstitialCallbacks(null);
 				//Appodeal.setInterstitialCallbacks(this);
@@ -222,6 +224,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 		rewardVideoAd.onFail = onFail;
 		//if(rewardVideoAd.canShow){
 			if(Appodeal.isLoaded(Appodeal.REWARDED_VIDEO) && !Application.isEditor){
+				if(MusicManager.instance != null)
+					MusicManager.instance.PauseMusic();
 				Appodeal.show(Appodeal.REWARDED_VIDEO);
 				//Appodeal.setRewardedVideoCallbacks(null);
 				//Appodeal.setRewardedVideoCallbacks(this);
@@ -282,6 +286,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	}
 
 	public void InternalOnInterstitialShown(){
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(interstitialAd.onDone != null){
 			System.Action temp = interstitialAd.onDone;
 			interstitialAd.onDone = null;
@@ -294,6 +300,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	}
 
 	public void InternalOnInterstitialClosed(){
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(interstitialAd.onDone != null){
 			System.Action temp = interstitialAd.onDone;
 			interstitialAd.onDone = null;
@@ -306,6 +314,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	}
 
 	public void InternalOnInterstitialClicked(){
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(interstitialAd.onDone != null){
 			System.Action temp = interstitialAd.onDone;
 			interstitialAd.onDone = null;
@@ -351,6 +361,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 
 	public void InternalOnRewardedVideoShowFailed(){
 		Debug.LogError("OnRewardedVideoShowFailed");
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(rewardVideoAd.onFail != null){
 			System.Action temp = rewardVideoAd.onFail;
 			rewardVideoAd.onFail = null;
@@ -365,6 +377,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 
 	public void InternalOnRewardedVideoShown(){
 		Debug.LogError("OnRewardedVideoShown");
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(rewardVideoAd.onDone != null){
 			System.Action temp = rewardVideoAd.onDone;
 			rewardVideoAd.onDone = null;
@@ -379,6 +393,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 
 	public void InternalOnRewardedVideoFinished(){
 		Debug.LogError("OnRewardedVideoFinished");
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(rewardVideoAd.onDone != null){
 			System.Action temp = rewardVideoAd.onDone;
 			rewardVideoAd.onDone = null;
@@ -396,6 +412,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	public void InternalOnRewardedVideoClosed(){
 		Debug.LogError("OnRewardedVideoClosed");
 		bool finished = InternalOnRewardedVideoClosedFinished;
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(finished && rewardVideoAd.onDone != null){
 			System.Action temp = rewardVideoAd.onDone;
 			rewardVideoAd.onDone = null;
@@ -426,6 +444,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 
 	public void InternalOnRewardedVideoClicked(){
 		Debug.LogError("OnRewardedVideoClicked");
+		if(MusicManager.instance != null)
+			MusicManager.instance.ResumeMusic();
 		if(rewardVideoAd.onDone != null){
 			System.Action temp = rewardVideoAd.onDone;
 			rewardVideoAd.onDone = null;
