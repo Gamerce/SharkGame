@@ -20,6 +20,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
     implementation 'androidx.core:core:1.7.0' // Assets/Appodeal/Editor/NetworkConfigs/VungleDependencies.xml:14
+    // implementation 'androidx.core:core:1.7.0+' // Assets/Plugins/VoxelBusters/EssentialKit/Essentials/Editor/CrossPlatformEssentialKitDependencies.xml:12
     implementation 'com.adcolony:sdk:4.8.0' // Assets/Appodeal/Editor/NetworkConfigs/AdColonyDependencies.xml:11
     implementation 'com.applovin:applovin-sdk:11.6.1' // Assets/Appodeal/Editor/NetworkConfigs/AppLovinDependencies.xml:9
     implementation 'com.appodeal.ads.sdk.core:internal:3.0.2' // Assets/Appodeal/Editor/NetworkConfigs/StackAnalyticsDependencies.xml:10
@@ -49,6 +50,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1' // Assets/Appodeal/Editor/NetworkConfigs/VungleDependencies.xml:13
     implementation 'com.google.android.gms:play-services-base:18.0.1' // Assets/Appodeal/Editor/NetworkConfigs/MetaAudienceNetworkDependencies.xml:12
     implementation 'com.google.android.gms:play-services-basement:18.1.0' // Assets/Appodeal/Editor/NetworkConfigs/VungleDependencies.xml:12
+    implementation 'com.google.android.play:review:2.0.1+' // Assets/Plugins/VoxelBusters/EssentialKit/Essentials/Editor/CrossPlatformEssentialKitDependencies.xml:9
+    implementation 'com.google.firebase:firebase-messaging:23.1.1+' // Assets/Plugins/VoxelBusters/EssentialKit/Essentials/Editor/CrossPlatformEssentialKitDependencies.xml:6
     implementation 'com.ironsource.sdk:mediationsdk:7.2.6' // Assets/Appodeal/Editor/NetworkConfigs/IronSourceDependencies.xml:9
     implementation 'com.my.target:mytarget-sdk:5.16.3' // Assets/Appodeal/Editor/NetworkConfigs/MyTargetDependencies.xml:11
     implementation 'com.unity3d.ads:unity-ads:4.5.0' // Assets/Appodeal/Editor/NetworkConfigs/UnityDependencies.xml:9
