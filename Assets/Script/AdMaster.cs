@@ -44,9 +44,9 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	AdInfo rewardVideoAd = new AdInfo();
 
 	public List<CallBackID> debbugerString = new List<CallBackID>();
-	[System.NonSerialized]
-	bool showAdsToggle = false;
-	int skipAdsFor = -1;
+	//[System.NonSerialized]
+	//bool showAdsToggle = false;
+	//int skipAdsFor = -1;
 
 	static AdMaster ourInstance;
 	public static AdMaster instance { // This is a property.
@@ -54,8 +54,8 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 			if(ourInstance == null){
 				GameObject temp = new GameObject("AdMaster");
 				ourInstance = temp.AddComponent<AdMaster>();
-				ourInstance.skipAdsFor = PlayerPrefs.GetInt("skipCount", -1);
-				ourInstance.skipAdsFor = Mathf.Min(ourInstance.skipAdsFor, 3);
+				//ourInstance.skipAdsFor = PlayerPrefs.GetInt("skipCount", -1);
+				//ourInstance.skipAdsFor = Mathf.Min(ourInstance.skipAdsFor, 3);
 			}
 		  return ourInstance;
 		}
@@ -182,27 +182,35 @@ public class AdMaster : MonoBehaviour, IInterstitialAdListener, IRewardedVideoAd
 	//}
 
 	public void ShowInterstitial(System.Action onSuccess, System.Action onFail){
-		if(skipAdsFor > 0){
-			skipAdsFor--;
-			PlayerPrefs.SetInt("skipCount", skipAdsFor);
-			showAdsToggle = false;
-			if(onFail != null)
-				onFail.Invoke();
-			return;
-		}
-		showAdsToggle = !showAdsToggle;
-		if(!showAdsToggle){
-			if(onFail != null)
-				onFail.Invoke();
-			return;
-		}
+		//if(skipAdsFor > 0){
+		//	skipAdsFor--;
+		//	PlayerPrefs.SetInt("skipCount", skipAdsFor);
+		//	showAdsToggle = false;
+		//	if(onFail != null)
+		//		onFail.Invoke();
+		//	return;
+		//}
+		//showAdsToggle = !showAdsToggle;
+		//if(!showAdsToggle){
+		//	if(onFail != null)
+		//		onFail.Invoke();
+		//	return;
+		//}
+		System.DateTime lastAdShown = System.DateTime.Parse(PlayerPrefs.GetString("LastAd", System.DateTime.MinValue.ToString()));
+		//if(Application.isEditor){
+		//	if((System.DateTime.Now - lastAdShown).TotalSeconds > 40){
+		//		Debug.LogError("Ad's Can be shown");
+		//		PlayerPrefs.SetString("LastAd", System.DateTime.Now.ToString());
+		//	}
+		//}
 		interstitialAd.onDone = onSuccess;
 		interstitialAd.onFail = onFail;
 		//if(interstitialAd.canShow){
-			if(Appodeal.isLoaded(Appodeal.INTERSTITIAL) && !Application.isEditor){
+			if(Appodeal.isLoaded(Appodeal.INTERSTITIAL) && !Application.isEditor && (System.DateTime.Now - lastAdShown).TotalSeconds > 50){
 				if(MusicManager.instance != null)
 					MusicManager.instance.PauseMusic();
 				Appodeal.show(Appodeal.INTERSTITIAL);
+				PlayerPrefs.SetString("LastAd", System.DateTime.Now.ToString());
 				//Appodeal.setInterstitialCallbacks(null);
 				//Appodeal.setInterstitialCallbacks(this);
 			}
