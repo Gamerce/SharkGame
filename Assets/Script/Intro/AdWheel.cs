@@ -40,7 +40,7 @@ public class AdWheel : MonoBehaviour
 		if(currentVal != lastValue){
 			lastValue = currentVal;
 			//coinAmount.SetText(lastValue.ToString());
-			coinAmount.SetText((baseCoins*2).ToString() + "|" + (baseCoins*8));
+			coinAmount.SetText((baseCoins*2).ToString() + "|" + (baseCoins*4));
 		}
 		if(!stopArrow){
 			if(goingUp){
