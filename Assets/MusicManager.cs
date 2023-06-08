@@ -23,6 +23,9 @@ public class MusicManager : MonoBehaviour
 	public bool isMusicOn = true;
 
 	bool forcePause = false;
+
+	//public bool pingSuccessFull = true;
+	bool exitPing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +44,7 @@ public class MusicManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         PlayRandomMusic();
+        //StartCoroutine(CheckPing());
     }
     float ScreamTimer = 0;
 	List<bool> isPlaying = new List<bool>();
@@ -56,6 +60,25 @@ public class MusicManager : MonoBehaviour
         }
         ScreamTimer -= Time.deltaTime;
     }
+
+	
+    //System.Collections.IEnumerator CheckPing()
+    //{
+	//	while(!exitPing){
+ 	//
+	//		if(pingSuccessFull)
+	//			yield return new WaitForSeconds(25.0f);
+	//		else
+	//			yield return new WaitForSeconds(5.0f);
+	//		pingSuccessFull = false;
+	//		var ping = new Ping("8.8.8.8");
+	//		while (!ping.isDone)
+	//			yield return new WaitForSeconds(0.1f);
+ 	//
+	//		pingSuccessFull = ping.time < 3;
+	//		ping.DestroyPing();
+	//	}
+    //}
 
 	public void PauseMusic(){
 		if(!forcePause){

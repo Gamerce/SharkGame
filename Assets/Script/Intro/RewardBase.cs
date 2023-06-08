@@ -48,6 +48,8 @@ public class RewardBase : MonoBehaviour
 	public AdWheel adWheel;
 	#endregion
 
+	public WiFiCheck checker;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -148,6 +150,7 @@ public class RewardBase : MonoBehaviour
 					MusicManager.instance.PlayCheseMusic();
 			});
 		}
+		checker.Show();
 	}
 
 	IEnumerator ExecuteAfterTime(float time,int rewardAmount)
